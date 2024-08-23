@@ -1,6 +1,7 @@
 package com.global.RecruitmentSystem.model;
 
 import com.global.RecruitmentSystem.enums.ClientRequirementStatus;
+import com.global.RecruitmentSystem.enums.SelectionProcessType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +43,7 @@ public class ClientRequirement {
     private BigDecimal maxSalary;
     private String currency;
     private String location;
-    private String selectionProcessType;
+    private SelectionProcessType selectionProcessType;
 
     @OneToMany(
             fetch = FetchType.LAZY,
