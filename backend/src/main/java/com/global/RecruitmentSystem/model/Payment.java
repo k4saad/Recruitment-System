@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.time.LocalDateTime;
 
 @Entity
@@ -34,5 +35,8 @@ public class Payment {
             mappedBy = "payment"
     )
     private Refund refund;
+
+    @Lob
+    private Blob receipt;
 
 }
