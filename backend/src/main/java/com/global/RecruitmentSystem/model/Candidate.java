@@ -41,7 +41,9 @@ public class Candidate {
     @Enumerated(EnumType.STRING)
     private MedicalValidity medicalValidity;
 
+    @Column(unique = true)
     private String username;
+
     private String password;
 
     @Column(columnDefinition = "json")
