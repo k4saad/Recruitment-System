@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: "LakesNeueRegular";
+    src: local("TTLakesNeueTrialExtendedRegular"),
+    url("./assets/fonts/TTLakesNeueTrialExtendedRegular.ttf")  format("truetype");
+}
+@font-face {
+    font-family: "Typewcond-Regular";
+    src: local("typewcond_regular"),
+    url("./assets/fonts/typewcond_regular.otf")  format("opentype");
+}
+@font-face {
+    font-family: "Cinzel-Regular";
+    src: local("CinzelDecorative-Regular"),
+    url("./assets/fonts/CinzelDecorative-Regular.otf")  format("opentype");
+}
+@font-face {
+    font-family: "LakesNeueDemiBold";
+    src: local("TTLakesNeueTrialExtendedDemiBold"),
+    url("./assets/fonts/TTLakesNeueTrialExtendedDemiBold.ttf")  format("truetype");
+}

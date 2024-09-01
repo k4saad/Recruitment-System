@@ -2,6 +2,7 @@ package com.global.RecruitmentSystem.service;
 
 import com.global.RecruitmentSystem.model.Candidate;
 import com.global.RecruitmentSystem.repository.CandidateRepository;
+import com.global.RecruitmentSystem.security.User;
 import com.global.RecruitmentSystem.security.service.JWTService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,16 +28,19 @@ public class CandidateService {
         return candidateRepository.save(candidate);
     }
 
-    public String verify(Candidate candidate) {
+    public String verify(User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        candidate.getUsername(),
-                        candidate.getPassword()
+                        user.getUsername(),
+                        user.getPassword()
                 )
         );
         if(authentication.isAuthenticated())
-            return jwtService.generateToken(candidate.getUsername());
+            return jwtService.generateToken(user.getUsername());
         else
             return "failure";
+    }
+    public Candidate findByUsername(String username) {
+        return candidateRepository.findByUsername(username);
     }
 }

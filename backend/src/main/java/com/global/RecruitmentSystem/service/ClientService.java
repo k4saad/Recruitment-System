@@ -2,6 +2,7 @@ package com.global.RecruitmentSystem.service;
 
 import com.global.RecruitmentSystem.model.Client;
 import com.global.RecruitmentSystem.repository.ClientRepository;
+import com.global.RecruitmentSystem.security.User;
 import com.global.RecruitmentSystem.security.service.JWTService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,16 +28,20 @@ public class ClientService {
     }
 
 
-    public String verify(Client client) {
+    public String verify(User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        client.getUsername(),
-                        client.getPassword()
+                        user.getUsername(),
+                        user.getPassword()
                 )
         );
         if(authentication.isAuthenticated())
-            return jwtService.generateToken(client.getUsername());
+            return jwtService.generateToken(user.getUsername());
         else
             return "failure";
+    }
+
+    public Client findByUsername(String username) {
+        return clientRepository.findByUsername(username);
     }
 }
