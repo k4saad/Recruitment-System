@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import logoImage from "../../assets/images/GlobalSmallLogo.png"
 import { Link, useNavigate } from 'react-router-dom'
 import { loginClient } from '../utils/apiFunctions'
+import jwtDecode from 'jwt-decode'
 
 export function LoginClient() {
 
@@ -24,8 +25,11 @@ export function LoginClient() {
         const response = await loginClient(user)
 		if (response) {
 			const token = response.token
-			localStorage.setItem("jwtToken", token)
-            navigate("/")
+      const decodedUser = jwtDecode(token)
+			localStorage.setItem("username", decodedUser.sub)
+      localStorage.setItem("jwtToken", token)
+
+            navigate("/client/requirement/add")
             window.location.reload()
         } else {
 			setErrorMessage("Invalid username or password. Please try again.")

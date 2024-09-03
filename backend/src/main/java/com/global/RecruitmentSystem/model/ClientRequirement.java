@@ -3,10 +3,7 @@ package com.global.RecruitmentSystem.model;
 import com.global.RecruitmentSystem.enums.ClientRequirementStatus;
 import com.global.RecruitmentSystem.enums.SelectionProcessType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,7 +12,8 @@ import java.util.List;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

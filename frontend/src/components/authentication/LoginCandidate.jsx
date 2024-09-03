@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import logoImage from "../../assets/images/GlobalSmallLogo.png"
 import { Link, useNavigate } from 'react-router-dom'
 import { loginCandidate } from '../utils/apiFunctions'
+import jwtDecode from 'jwt-decode'
 
 export function LoginCandidate() {
 
@@ -24,6 +25,8 @@ export function LoginCandidate() {
         const response = await loginCandidate(user)
 		if (response) {
 			const token = response.token
+      const decodedUser = jwtDecode(token)
+      localStorage.setItem("username", decodedUser.sub)
 			localStorage.setItem("jwtToken", token)
             navigate("/")
             window.location.reload()

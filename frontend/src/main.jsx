@@ -12,6 +12,7 @@ import Login from './components/authentication/Login.jsx'
 import Register from './components/authentication/Register.jsx'
 import { LoginClient } from './components/authentication/LoginClient.jsx'
 import { RegisterClient } from './components/authentication/RegisterClient.jsx'
+import AddRequirement from './components/client/requirement/AddRequirement.jsx' 
 
 
 const router = createBrowserRouter(
@@ -25,7 +26,8 @@ const router = createBrowserRouter(
       <Route path='about' element = {<About/>}/>      
       <Route path='contact' element = {<Contact/>}/>      
       <Route path='login' element = {<Login/>}/>      
-      <Route path='register' element = {<Register/>}/>      
+      <Route path='register' element = {<Register/>}/>   
+      <Route path='client/requirement/add' element = {<AddRequirement/>}/>   
     </Route>
   )
 )

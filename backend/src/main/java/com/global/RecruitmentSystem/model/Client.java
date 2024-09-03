@@ -1,18 +1,16 @@
 package com.global.RecruitmentSystem.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class Client {
 
     @Id
@@ -34,16 +32,29 @@ public class Client {
     private String password;
 
     @OneToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             mappedBy = "client"
     )
     private List<ClientRequirement> clientRequirements;
 
     @OneToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             mappedBy = "client"
     )
     private List<ClientNotification> clientNotifications;
+
+    public Client(){
+        this.clientRequirements = new ArrayList<>();
+        this.clientNotifications = new ArrayList<>();
+    }
+
+    public void addRequirement(ClientRequirement newClientRequirement){
+        if (clientRequirements == null){
+            clientRequirements = new ArrayList<>();
+        }
+        clientRequirements.add(newClientRequirement);
+        newClientRequirement.setClient(this);
+    }
 }

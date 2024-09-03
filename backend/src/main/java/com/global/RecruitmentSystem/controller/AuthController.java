@@ -8,6 +8,7 @@ import com.global.RecruitmentSystem.security.User;
 import com.global.RecruitmentSystem.service.CandidateService;
 import com.global.RecruitmentSystem.service.ClientService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
     private CandidateService candidateService;
@@ -33,6 +35,7 @@ public class AuthController {
             if(clientService.findByUsername(candidate.getUsername()) != null)
                 throw new UserAlreadyExistsException("User Already Exists");
             candidateService.register(candidate);
+            log.info("Candidate Registered");
             return ResponseEntity.ok("Registration Successful");
         }
         catch (UserAlreadyExistsException userAlreadyExistsException){
@@ -50,6 +53,7 @@ public class AuthController {
             if(clientService.findByUsername(client.getUsername()) != null)
                 throw new UserAlreadyExistsException("User Already Exists");
             clientService.register(client);
+            log.info("Client Registered");
             return ResponseEntity.ok("Registration Successful");
         }
         catch (UserAlreadyExistsException userAlreadyExistsException){

@@ -66,6 +66,22 @@ export const registerCandidate = async (candidateData) => {
 };
 
 
+export const registerClient = async (clientData) => {
+    try {
+        const response = await api.post("/auth/register/client", clientData);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data) {
+            // Extract and return the specific error message from the response body
+            throw new Error(error.response.data);
+        } else {
+            console.error("Registration failed:", error);
+            throw error;
+        }
+    }
+};
+
+
 // Function to get the user profile, using the saved JWT token for authorization
 export const getUserProfile = async () => {
     try {
@@ -78,6 +94,22 @@ export const getUserProfile = async () => {
         return response.data;
     } catch (error) {
         console.error("Failed to fetch user profile:", error);
+        throw error;
+    }
+};
+
+
+export const addRequirement = async (username, newRequirement) => {
+    try {
+        const token = getToken();
+        const response = await api.post(`/requirements/${username}`, newRequirement, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Failed to add requirement:", error);
         throw error;
     }
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import logoImage from "../../assets/images/GlobalSmallLogo.png"
 import { Link, useNavigate } from 'react-router-dom'
-import { registerCandidate } from '../utils/apiFunctions'
+import { registerClient } from '../utils/apiFunctions'
 
 export function RegisterClient() {
 
@@ -26,7 +26,7 @@ export function RegisterClient() {
   const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
-			const response = await registerCandidate(user)
+			const response = await registerClient(user)
 			setSuccessMessage(response)
 			setErrorMessage("")
 			setUser({ name : "",organizationName : "", contactNumber : "", email : "", username : "", password : "" })
