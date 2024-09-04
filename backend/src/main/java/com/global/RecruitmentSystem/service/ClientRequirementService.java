@@ -25,4 +25,13 @@ public class ClientRequirementService {
         return clientRequirementRepository.save(newClientRequirement);
     }
 
+    public List<ClientRequirement> getRequirementByUsername(String username) {
+        Client client = clientService.findByUsername(username);
+        log.info("Getting requirements for client {}",username);
+        return client.getClientRequirements();
+    }
+
+    public void deleteClientRequirementById(Integer requirementId) {
+        clientRequirementRepository.removeById(requirementId);
+    }
 }

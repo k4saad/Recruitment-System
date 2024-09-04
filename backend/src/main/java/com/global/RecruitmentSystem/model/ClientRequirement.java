@@ -46,7 +46,8 @@ public class ClientRequirement {
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "clientRequirement"
+            mappedBy = "clientRequirement",
+            orphanRemoval = true
     )
     private List<CandidateApplication> candidateApplications;
 

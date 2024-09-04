@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 const ClientSideBar = () => {
   return (
     <aside className="flex h-screen w-64 flex-col overflow-y-auto border-r bg-[#032B22] px-5 py-8 font-LakesNeueRegular text-[#EFEDE7]">
-      <Link to="/client/requirement">
+      <Link to="/client/requirement/all">
       <svg
               fill="#EFEDE7"
               height="60px"
@@ -84,7 +84,7 @@ const ClientSideBar = () => {
           </div>
           <div className="space-y-3 ">
             <label className="px-3 text-xs font-semibold uppercase">
-              Applicants
+              Applicant
             </label>
             <NavLink
             to="/client/applicants/all"

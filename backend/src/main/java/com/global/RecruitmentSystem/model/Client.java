@@ -34,14 +34,16 @@ public class Client {
     @OneToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
-            mappedBy = "client"
+            mappedBy = "client",
+            orphanRemoval = true
     )
     private List<ClientRequirement> clientRequirements;
 
     @OneToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
-            mappedBy = "client"
+            mappedBy = "client",
+            orphanRemoval = true
     )
     private List<ClientNotification> clientNotifications;
 

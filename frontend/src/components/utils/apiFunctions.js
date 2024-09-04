@@ -113,3 +113,33 @@ export const addRequirement = async (username, newRequirement) => {
         throw error;
     }
 };
+
+// Function to delete room by id
+export async function deleteRequirementById(requirementId){
+    try {
+        const token = getToken();
+        const response = await api.delete(`/requirements/${requirementId}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Deleting requirement")
+    }
+}
+
+
+export async function getAllRequirementsForTable(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/requirements/table/${username}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching requirements")
+    }
+}

@@ -29,7 +29,7 @@ export function LoginClient() {
 			localStorage.setItem("username", decodedUser.sub)
       localStorage.setItem("jwtToken", token)
 
-            navigate("/client/requirement/add")
+            navigate("/client/requirement/all")
             window.location.reload()
         } else {
 			setErrorMessage("Invalid username or password. Please try again.")

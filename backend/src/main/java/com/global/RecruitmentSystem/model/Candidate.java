@@ -52,14 +52,16 @@ public class Candidate {
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "candidate"
+            mappedBy = "candidate",
+            orphanRemoval = true
     )
     private List<CandidateApplication> candidateApplications;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "candidate"
+            mappedBy = "candidate",
+            orphanRemoval = true
     )
     private List<CandidateNotification> candidateNotifications;
 

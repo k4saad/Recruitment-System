@@ -36,28 +36,32 @@ public class CandidateApplication {
     @OneToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "candidateApplication"
+            mappedBy = "candidateApplication",
+            orphanRemoval = true
     )
     private Payment payment;
 
     @OneToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "candidateApplication"
+            mappedBy = "candidateApplication",
+            orphanRemoval = true
     )
     private Interview interview;
 
     @OneToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "candidateApplication"
+            mappedBy = "candidateApplication",
+            orphanRemoval = true
     )
     private CandidateVisaDocument candidateVisaDocument;
 
     @OneToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "candidateApplication"
+            mappedBy = "candidateApplication",
+            orphanRemoval = true
     )
     private Ticket ticket;
 }
