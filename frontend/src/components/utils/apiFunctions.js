@@ -143,3 +143,17 @@ export async function getAllRequirementsForTable(username){
         throw new Error("Error : Fetching requirements")
     }
 }
+
+export async function getAvailableRequirements(){
+    try {
+        const token = getToken();
+        const response = await api.get(`/requirements/available`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching requirements")
+    }
+}

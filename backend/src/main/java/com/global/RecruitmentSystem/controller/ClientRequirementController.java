@@ -1,6 +1,7 @@
 package com.global.RecruitmentSystem.controller;
 
 import com.global.RecruitmentSystem.model.ClientRequirement;
+import com.global.RecruitmentSystem.response.ClientRequirementCardResponse;
 import com.global.RecruitmentSystem.response.ClientRequirementTableResponse;
 import com.global.RecruitmentSystem.service.ClientRequirementService;
 import lombok.AllArgsConstructor;
@@ -68,6 +69,36 @@ public class ClientRequirementController {
 
     }
 
+    @GetMapping("available")
+    public ResponseEntity<List<ClientRequirementCardResponse>> getClientRequirementsCardResponse(){
+
+        List<ClientRequirementCardResponse> clientRequirementCardResponses = new ArrayList<>();
+        log.info("Received request for client requirements");
+        List<ClientRequirement>clientRequirements = clientRequirementService
+                .getAllClientRequirements();
+        log.info("Converting ClientRequirement to ClientRequirementCardResponse");
+        for(ClientRequirement clientRequirement : clientRequirements){
+            ClientRequirementCardResponse clientRequirementCardResponse =
+                    getClientRequirementsCardResponse(clientRequirement);
+            clientRequirementCardResponses.add(clientRequirementCardResponse);
+        }
+        log.info("Successfully converted ClientRequirement to ClientRequirementCardResponse");
+        return ResponseEntity.ok(clientRequirementCardResponses);
+    }
+
+    private ClientRequirementCardResponse getClientRequirementsCardResponse(
+            ClientRequirement clientRequirement
+    ) {
+        return new ClientRequirementCardResponse(
+                clientRequirement.getRequirementId(),
+                clientRequirement.getTitle(),
+                clientRequirement.getClient().getOrganizationName(),
+                clientRequirement.getMinSalary(),
+                clientRequirement.getMaxSalary(),
+                clientRequirement.getCurrency(),
+                clientRequirement.getLocation()
+        );
+    }
 
 
     // helper method to convert ClientRequirement object to ClientRequirementTableResponse object to send to frontend

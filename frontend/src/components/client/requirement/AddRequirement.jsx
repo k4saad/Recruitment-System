@@ -132,9 +132,9 @@ const AddRequirement = () => {
                         <div className="mb-4">
                             <label htmlFor="description" 
                             className="block text-gray-700 font-bold mb-2">Job Description</label>
-                            <input
+                            <textarea
                                 required
-                                type="text"
+                                rows="5"
                                 className="shadow appearance-none w-full py-2 px-3 focus:ring-[#00634D] focus:border-[#00634D] placeholder-gray-700 border rounded focus:outline-none focus:shadow-outline"
                                 id="description"
                                 name="description"
@@ -148,7 +148,7 @@ const AddRequirement = () => {
                             className="block text-gray-700 font-bold mb-2">Requirement Validity</label>
                             <input
                                 type="date"
-                                className="shadow p-5 px-10 rounded-xl font-TypewcondRegular text-xl "
+                                className="shadow p-5 px-10 rounded-xl font-TypewcondRegular text-xl placeholder-gray-700 focus:ring-[#00634D]  focus:border-[#00634D] border focus:outline-none focus:shadow-outline"
                                 id="validTill"
                                 name="validTill"
                                 value={newRequirement.validTill}

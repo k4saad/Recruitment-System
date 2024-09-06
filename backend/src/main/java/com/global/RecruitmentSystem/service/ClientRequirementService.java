@@ -34,4 +34,8 @@ public class ClientRequirementService {
     public void deleteClientRequirementById(Integer requirementId) {
         clientRequirementRepository.removeById(requirementId);
     }
+
+    public List<ClientRequirement> getAllClientRequirements() {
+        return clientRequirementRepository.findAll();
+    }
 }

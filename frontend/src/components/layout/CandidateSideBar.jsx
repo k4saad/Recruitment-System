@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-const ClientSideBar = () => {
+const CandidateSideBar = () => {
   return (
     <aside className="flex h-screen w-64 flex-col overflow-y-auto border-r bg-[#032B22] px-5 py-8 font-LakesNeueRegular text-[#EFEDE7]">
-      <Link to="/client/requirement/all">
+      <Link to="/candidate/requirement/all">
       <svg
               fill="#EFEDE7"
               height="60px"
@@ -68,51 +68,26 @@ const ClientSideBar = () => {
             <label className="px-3 text-xs font-semibold uppercase ">
               Requirement
             </label>
-            <NavLink to="/client/requirement/all"
+            <NavLink to="/candidate/requirement/all"
               className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
             >
-              <span className="mx-2 text-sm font-medium">Existing Requirements</span>
+              <span className="mx-2 text-sm font-medium">All Requirements</span>
             </NavLink>
             <NavLink
-            to="/client/requirement/add"
+            to="/candidate/requirement/add"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >
-              <span className="mx-2 text-sm font-medium">Add Requirement</span>
-            </NavLink>
-          </div>
-          <div className="space-y-3 ">
-            <label className="px-3 text-xs font-semibold uppercase">
-              Applicant
-            </label>
-            <NavLink
-            to="/client/applicants/all"
-            className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
-                isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
-              >
-              <span className="mx-2 text-sm font-medium">All Applicants</span>
-            </NavLink>
-            <NavLink
-            to="/client/applicants/add"
-            className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
-                isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
-              >
-              <span className="mx-2 text-sm font-medium">Selected Applicant</span>
+              <span className="mx-2 text-sm font-medium">Applied Requirement</span>
             </NavLink>
           </div>
           <div className="space-y-3 ">
             <label className="px-3 text-xs font-semibold uppercase ">
               Interview
             </label>
-            <NavLink to="/client/interview/all"
-              className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
-                isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
-            >
-              <span className="mx-2 text-sm font-medium">All Interview</span>
-            </NavLink>
             <NavLink
-            to="/client/interview/upcoming"
+            to="/candidate/interview/upcoming"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >
@@ -124,7 +99,7 @@ const ClientSideBar = () => {
               Profile
             </label>
             <NavLink
-            to="/client/profile"
+            to="/candidate/profile"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >
@@ -138,4 +113,4 @@ const ClientSideBar = () => {
   );
 };
 
-export default ClientSideBar;
+export default CandidateSideBar;

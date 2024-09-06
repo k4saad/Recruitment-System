@@ -28,7 +28,7 @@ export function LoginCandidate() {
       const decodedUser = jwtDecode(token)
       localStorage.setItem("username", decodedUser.sub)
 			localStorage.setItem("jwtToken", token)
-            navigate("/")
+            navigate("/candidate/requirement/all")
             window.location.reload()
         } else {
 			setErrorMessage("Invalid username or password. Please try again.")
