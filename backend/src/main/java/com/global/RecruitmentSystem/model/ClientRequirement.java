@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import java.util.List;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class ClientRequirement {
 
     @Id
@@ -51,6 +51,17 @@ public class ClientRequirement {
     )
     private List<CandidateApplication> candidateApplications;
 
+    public ClientRequirement(){
+        this.candidateApplications = new ArrayList<>();
+    }
 
+    public void addCandidateApplication(CandidateApplication candidateApplication) {
+        if(candidateApplications == null){
+            candidateApplications = new ArrayList<>();
+        }
+        candidateApplications.add(candidateApplication);
+        candidateApplication.setClientRequirement(this);
+
+    }
 }
 

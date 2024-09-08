@@ -1,5 +1,6 @@
 package com.global.RecruitmentSystem.service;
 
+import com.global.RecruitmentSystem.exceptions.ClientRequirementNotFound;
 import com.global.RecruitmentSystem.model.Client;
 import com.global.RecruitmentSystem.model.ClientRequirement;
 import com.global.RecruitmentSystem.repository.ClientRequirementRepository;
@@ -37,5 +38,11 @@ public class ClientRequirementService {
 
     public List<ClientRequirement> getAllClientRequirements() {
         return clientRequirementRepository.findAll();
+    }
+
+    public ClientRequirement getRequirementById(Integer requirementId) {
+        return clientRequirementRepository.findById(requirementId).orElseThrow(
+                () -> new ClientRequirementNotFound("Client Requirement with id " + requirementId + "does not exist")
+        );
     }
 }

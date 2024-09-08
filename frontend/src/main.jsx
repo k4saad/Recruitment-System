@@ -15,6 +15,7 @@ import { RegisterClient } from './components/authentication/RegisterClient.jsx'
 import AddRequirement from './components/client/requirement/AddRequirement.jsx' 
 import AllRequirement from './components/client/requirement/AllRequirement.jsx'
 import AvailableRequirement from './components/candidate/requirement/AvailableRequirement.jsx'
+import RequirementDetail from './components/candidate/requirement/RequirementDetail.jsx'
 
 
 const router = createBrowserRouter(
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
       <Route path='client/requirement/add' element = {<AddRequirement/>}/>   
       <Route path='client/requirement/all' element = {<AllRequirement/>}/>   
       <Route path='candidate/requirement/all' element = {<AvailableRequirement/>}/>   
+      <Route path='candidate/requirement/detail/:requirementId' element = {<RequirementDetail/>}/>   
     </Route>
   )
 )

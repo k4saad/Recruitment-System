@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class CandidateApplication {
 
     @Id

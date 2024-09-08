@@ -157,3 +157,40 @@ export async function getAvailableRequirements(){
         throw new Error("Error : Fetching requirements")
     }
 }
+
+
+export async function getRequirementDetail(requirementId){
+    try {
+        const token = getToken();
+        const response = await api.get(`/requirements/detail/${requirementId}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching requirement")
+    }
+}
+
+
+
+export const applyToRequirement = async (username, requirementId) => {
+    try {
+        const token = getToken();
+        const response = await api.post(`/applications/${username}?requirementId=${requirementId}`,{},{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            console.error("Failed to apply:", error.response.data);
+            throw new Error(error.response.data); 
+        } else {
+            console.error("Failed to apply:", error);
+            throw error;
+        }
+    }
+};

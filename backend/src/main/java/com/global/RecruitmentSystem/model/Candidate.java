@@ -10,13 +10,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class Candidate {
 
     @Id
@@ -65,4 +65,16 @@ public class Candidate {
     )
     private List<CandidateNotification> candidateNotifications;
 
+    public Candidate(){
+        this.candidateApplications = new ArrayList<>();
+        this.candidateNotifications = new ArrayList<>();
+    }
+
+    public void addCandidateApplication(CandidateApplication candidateApplication) {
+        if(candidateApplications == null){
+            candidateApplications = new ArrayList<>();
+        }
+        candidateApplications.add(candidateApplication);
+        candidateApplication.setCandidate(this);
+    }
 }

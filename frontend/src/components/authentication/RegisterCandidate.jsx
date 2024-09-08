@@ -31,7 +31,7 @@ export function RegisterCandidate() {
       setTimeout(() => {
         navigate("/login/candidate")
         window.location.reload()
-      }, 3)
+      }, 2000)
 		} catch (error) {
 			setSuccessMessage("")
 			setErrorMessage(`Registration error : ${error.message}`)

@@ -43,4 +43,5 @@ public class CandidateService {
     public Candidate findByUsername(String username) {
         return candidateRepository.findByUsername(username);
     }
+
 }

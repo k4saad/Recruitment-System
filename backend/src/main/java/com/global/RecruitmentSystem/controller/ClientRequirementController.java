@@ -2,6 +2,7 @@ package com.global.RecruitmentSystem.controller;
 
 import com.global.RecruitmentSystem.model.ClientRequirement;
 import com.global.RecruitmentSystem.response.ClientRequirementCardResponse;
+import com.global.RecruitmentSystem.response.ClientRequirementDetailResponse;
 import com.global.RecruitmentSystem.response.ClientRequirementTableResponse;
 import com.global.RecruitmentSystem.service.ClientRequirementService;
 import lombok.AllArgsConstructor;
@@ -74,7 +75,7 @@ public class ClientRequirementController {
 
         List<ClientRequirementCardResponse> clientRequirementCardResponses = new ArrayList<>();
         log.info("Received request for client requirements");
-        List<ClientRequirement>clientRequirements = clientRequirementService
+        List<ClientRequirement> clientRequirements = clientRequirementService
                 .getAllClientRequirements();
         log.info("Converting ClientRequirement to ClientRequirementCardResponse");
         for(ClientRequirement clientRequirement : clientRequirements){
@@ -84,6 +85,32 @@ public class ClientRequirementController {
         }
         log.info("Successfully converted ClientRequirement to ClientRequirementCardResponse");
         return ResponseEntity.ok(clientRequirementCardResponses);
+    }
+
+    @GetMapping("detail/{requirementId}")
+    public ResponseEntity<ClientRequirementDetailResponse> getClientRequirementDetail(
+            @PathVariable Integer requirementId
+    ){
+        log.info("Received request for client requirement detail");
+        ClientRequirement clientRequirement = clientRequirementService.getRequirementById(requirementId);
+        log.info("Converting ClientRequirement to ClientRequirementDetailResponse");
+        ClientRequirementDetailResponse clientRequirementDetailResponse =
+                getClientRequirementDetailResponse(clientRequirement);
+        log.info("Successfully converted ClientRequirement to ClientRequirementDetailResponse");
+        return ResponseEntity.ok(clientRequirementDetailResponse);
+    }
+
+    private ClientRequirementDetailResponse getClientRequirementDetailResponse(
+            ClientRequirement clientRequirement
+    ) {
+        return new ClientRequirementDetailResponse( clientRequirement.getRequirementId(),
+                clientRequirement.getTitle(), clientRequirement.getDescription(),
+                clientRequirement.getStatus(), clientRequirement.getDatePosted(),
+                clientRequirement.getValidTill(), clientRequirement.getMinSalary(),
+                clientRequirement.getMaxSalary(), clientRequirement.getCurrency(),
+                clientRequirement.getLocation(), clientRequirement.getClient().getName(),
+                clientRequirement.getClient().getOrganizationName()
+        );
     }
 
     private ClientRequirementCardResponse getClientRequirementsCardResponse(

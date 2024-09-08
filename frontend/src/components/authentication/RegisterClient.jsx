@@ -33,7 +33,7 @@ export function RegisterClient() {
       setTimeout(() => {
         navigate("/login/client")
         window.location.reload()
-      }, 3)
+      }, 2000)
 		} catch (error) {
 			setSuccessMessage("")
 			setErrorMessage(`Registration error : ${error.message}`)
