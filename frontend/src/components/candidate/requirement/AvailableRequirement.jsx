@@ -28,7 +28,7 @@ const AvailableRequirement = () => {
     const fetchAvailableRequirements = async () => {
       setIsLoading(true);
       try {
-        const data = await getAvailableRequirements();
+        const data = await getAvailableRequirements(localStorage.getItem("username"));
         setAvailableRequirements(data);
         setIsLoading(false);
       } catch (error) {

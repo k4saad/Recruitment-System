@@ -28,7 +28,7 @@ public class CandidateApplicationController {
         log.info("Received request to add CandidateApplication for candidate : {}", username);
         try {
             CandidateApplication candidateApplication = candidateApplicationService.addCandidateApplication(username, requirementId);
-            return ResponseEntity.ok(candidateApplication);
+            return ResponseEntity.ok(true);
         } catch (DocumentMissing e) {
             return ResponseEntity.badRequest().body(e.getMessage());
 

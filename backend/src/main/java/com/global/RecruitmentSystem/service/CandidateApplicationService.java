@@ -1,5 +1,6 @@
 package com.global.RecruitmentSystem.service;
 
+import com.global.RecruitmentSystem.enums.CandidateApplicationStatus;
 import com.global.RecruitmentSystem.exceptions.DocumentMissing;
 import com.global.RecruitmentSystem.model.Candidate;
 import com.global.RecruitmentSystem.model.CandidateApplication;
@@ -30,6 +31,7 @@ public class CandidateApplicationService {
         }
         log.info("Creating object of CandidateApplication");
         CandidateApplication candidateApplication = CandidateApplication.builder()
+                .status(CandidateApplicationStatus.APPLIED)
                 .dateApplied(LocalDate.now())
                 .build();
         log.info("Attaching CandidateApplication to the ClientRequirement with id : {}",requirementId);

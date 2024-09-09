@@ -16,6 +16,8 @@ import AddRequirement from './components/client/requirement/AddRequirement.jsx'
 import AllRequirement from './components/client/requirement/AllRequirement.jsx'
 import AvailableRequirement from './components/candidate/requirement/AvailableRequirement.jsx'
 import RequirementDetail from './components/candidate/requirement/RequirementDetail.jsx'
+import CandidateProfile from './components/candidate/profile/CandidateProfile.jsx'
+import EditCandidateProfile from './components/candidate/profile/EditCandidateProfile.jsx'
 
 
 const router = createBrowserRouter(
@@ -34,6 +36,8 @@ const router = createBrowserRouter(
       <Route path='client/requirement/all' element = {<AllRequirement/>}/>   
       <Route path='candidate/requirement/all' element = {<AvailableRequirement/>}/>   
       <Route path='candidate/requirement/detail/:requirementId' element = {<RequirementDetail/>}/>   
+      <Route path='candidate/profile' element = {<CandidateProfile/>}/>   
+      <Route path='candidate/profile/edit' element = {<EditCandidateProfile/>}/>   
     </Route>
   )
 )

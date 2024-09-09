@@ -4,6 +4,7 @@ import com.global.RecruitmentSystem.model.ClientRequirement;
 import com.global.RecruitmentSystem.response.ClientRequirementCardResponse;
 import com.global.RecruitmentSystem.response.ClientRequirementDetailResponse;
 import com.global.RecruitmentSystem.response.ClientRequirementTableResponse;
+import com.global.RecruitmentSystem.service.CandidateService;
 import com.global.RecruitmentSystem.service.ClientRequirementService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Slf4j
@@ -23,6 +27,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 public class ClientRequirementController {
     private final ClientRequirementService clientRequirementService;
+    private final CandidateService candidateService;
 
 
     @PreAuthorize("hasRole('ROLE_CLIENT')")
@@ -70,22 +75,36 @@ public class ClientRequirementController {
 
     }
 
-    @GetMapping("available")
-    public ResponseEntity<List<ClientRequirementCardResponse>> getClientRequirementsCardResponse(){
+    @GetMapping("available/{username}")
+    public ResponseEntity<List<ClientRequirementCardResponse>> getClientRequirementsCardResponse(
+            @PathVariable String username
+    ){
 
-        List<ClientRequirementCardResponse> clientRequirementCardResponses = new ArrayList<>();
-        log.info("Received request for client requirements");
-        List<ClientRequirement> clientRequirements = clientRequirementService
-                .getAllClientRequirements();
-        log.info("Converting ClientRequirement to ClientRequirementCardResponse");
-        for(ClientRequirement clientRequirement : clientRequirements){
-            ClientRequirementCardResponse clientRequirementCardResponse =
-                    getClientRequirementsCardResponse(clientRequirement);
-            clientRequirementCardResponses.add(clientRequirementCardResponse);
+        List<ClientRequirementCardResponse> availableClientRequirementCardResponses = new ArrayList<>();
+        log.info("Received request for available client requirements");
+
+
+        List<ClientRequirement> allClientRequirements = clientRequirementService.getAllClientRequirements();
+
+
+        List<ClientRequirement> appliedClientRequirements = candidateService.getAppliedRequirements(username);
+
+        Set<Integer> appliedRequirementIds = appliedClientRequirements.stream()
+                .map(ClientRequirement::getRequirementId)
+                .collect(Collectors.toSet());
+
+        for (ClientRequirement clientRequirement : allClientRequirements) {
+            if (!appliedRequirementIds.contains(clientRequirement.getRequirementId())) {
+                ClientRequirementCardResponse clientRequirementCardResponse =
+                        getClientRequirementsCardResponse(clientRequirement);
+                availableClientRequirementCardResponses.add(clientRequirementCardResponse);
+            }
         }
-        log.info("Successfully converted ClientRequirement to ClientRequirementCardResponse");
-        return ResponseEntity.ok(clientRequirementCardResponses);
+
+        log.info("Successfully filtered and converted available client requirements to ClientRequirementCardResponse");
+        return ResponseEntity.ok(availableClientRequirementCardResponses);
     }
+
 
     @GetMapping("detail/{requirementId}")
     public ResponseEntity<ClientRequirementDetailResponse> getClientRequirementDetail(
@@ -98,6 +117,23 @@ public class ClientRequirementController {
                 getClientRequirementDetailResponse(clientRequirement);
         log.info("Successfully converted ClientRequirement to ClientRequirementDetailResponse");
         return ResponseEntity.ok(clientRequirementDetailResponse);
+    }
+
+    @GetMapping("applied/{username}")
+    public ResponseEntity<List<ClientRequirementCardResponse>> getAppliedRequirement(
+            @PathVariable String username
+    ){
+        List<ClientRequirementCardResponse> clientRequirementCardResponses = new ArrayList<>();
+        log.info("Received request for applied requirement for Candidate with username : {}", username);
+        List<ClientRequirement> clientRequirements = candidateService.getAppliedRequirements(username);
+        log.info("Converting ClientRequirement to ClientRequirementCardResponse");
+        for(ClientRequirement clientRequirement : clientRequirements){
+            ClientRequirementCardResponse clientRequirementCardResponse =
+                    getClientRequirementsCardResponse(clientRequirement);
+            clientRequirementCardResponses.add(clientRequirementCardResponse);
+        }
+        log.info("Successfully converted ClientRequirement to ClientRequirementCardResponse");
+        return ResponseEntity.ok(clientRequirementCardResponses);
     }
 
     private ClientRequirementDetailResponse getClientRequirementDetailResponse(

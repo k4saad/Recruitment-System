@@ -46,8 +46,9 @@ public class Candidate {
 
     private String password;
 
-    @Column(columnDefinition = "json")
-    private String documents;
+//    TODO -- Implement this , currently not doing because of time constraint
+//    @Column(columnDefinition = "json")
+//    private Blob documents;
 
     @OneToMany(
             fetch = FetchType.LAZY,

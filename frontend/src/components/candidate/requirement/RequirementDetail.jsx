@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ErrorNotification from "../../common/ErrorNotification";
+import SuccessNotification from "../../common/SuccessNotification"
 import { applyToRequirement, getRequirementDetail } from "../../utils/apiFunctions";
 
 const RequirementDetail = ({}) => {
     const [requirement, setRequirement] = useState();
     const {requirementId} = useParams();
     const [errorMessage, setErrorMessage] = useState("")
+    const [successMessage, setSuccessMessage] = useState("")
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,9 +41,9 @@ const RequirementDetail = ({}) => {
     }
     
     const handleOnClick = async (e) => {
+      setIsSubmitting(true)
         try{
             const success = await applyToRequirement(localStorage.getItem("username"), requirement.requirementId)
-            /* TODO -- Make error more precise */
             if(success !== undefined){
                 setSuccessMessage("Applied successfully")
                 setTimeout(() => {
@@ -71,6 +74,11 @@ const RequirementDetail = ({}) => {
             <ErrorNotification errorMessage={errorMessage}
             handleNotification={handleNotification}/>
           )}
+          {successMessage && (
+            <SuccessNotification successMessage={successMessage}
+            handleNotification={handleNotification}/>
+          )}
+          
           <div className="flex flex-col mx-auto">
             <h2 className="font-CinzelRegular mx-auto text-3xl font-bold text-[#00634D] size-fit">
               Requirement Details
@@ -107,6 +115,7 @@ const RequirementDetail = ({}) => {
                         <div>
                         <button type="button" 
                         onClick={handleOnClick}
+                        disabled={isSubmitting}
                         className=" bg-[#00634D] rounded-lg hover:bg-[#16473d] focus:bg-[#00634D]
                           text-white font-bold py-2 px-4  focus:outline-none mx-auto
                           focus:shadow-outline">Apply</button>

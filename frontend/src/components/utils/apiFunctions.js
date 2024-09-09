@@ -144,10 +144,10 @@ export async function getAllRequirementsForTable(username){
     }
 }
 
-export async function getAvailableRequirements(){
+export async function getAvailableRequirements(username){
     try {
         const token = getToken();
-        const response = await api.get(`/requirements/available`,{
+        const response = await api.get(`/requirements/available/${username}`,{
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -157,7 +157,6 @@ export async function getAvailableRequirements(){
         throw new Error("Error : Fetching requirements")
     }
 }
-
 
 export async function getRequirementDetail(requirementId){
     try {
@@ -172,8 +171,6 @@ export async function getRequirementDetail(requirementId){
         throw new Error("Error : Fetching requirement")
     }
 }
-
-
 
 export const applyToRequirement = async (username, requirementId) => {
     try {
@@ -194,3 +191,51 @@ export const applyToRequirement = async (username, requirementId) => {
         }
     }
 };
+
+export async function getCandidateDetails(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/candidate/${username}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching details")
+    }
+}
+
+export async function updateCandidateProfile(username, name, contactNumber, resume, medicalReport){
+    const formData = new FormData()
+    formData.append("name", name)
+    formData.append("contactNumber", contactNumber)
+    formData.append("resume", resume)
+    formData.append("medicalReport", medicalReport)
+    try{
+        const token = getToken();
+        const response = await api.put(`/candidate/${username}`,formData,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response
+    }
+    catch (error){
+        throw new Error("Error : Updateing profile")
+    }
+}
+
+export async function getAppliedRequirements(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/requirements/applied/${username}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching requirements")
+    }
+}

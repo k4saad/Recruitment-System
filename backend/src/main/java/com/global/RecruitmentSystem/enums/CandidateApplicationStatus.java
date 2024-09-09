@@ -1,6 +1,7 @@
 package com.global.RecruitmentSystem.enums;
 
 public enum CandidateApplicationStatus {
+    APPLIED,
     UNDER_REVIEW,
     SELECTED_FOR_INTERVIEW,
     MEDICAL_REPORT_REQUESTED,
