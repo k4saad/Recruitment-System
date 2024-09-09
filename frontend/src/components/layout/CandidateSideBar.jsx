@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 const CandidateSideBar = () => {
   return (
     <aside className="flex h-screen w-64 flex-col overflow-y-auto border-r bg-[#032B22] px-5 py-8 font-LakesNeueRegular text-[#EFEDE7]">
-      <Link to="/candidate/requirement/all">
+      <Link to="/candidate/requirement">
       <svg
               fill="#EFEDE7"
               height="60px"
@@ -68,14 +68,14 @@ const CandidateSideBar = () => {
             <label className="px-3 text-xs font-semibold uppercase ">
               Requirement
             </label>
-            <NavLink to="/candidate/requirement/all"
+            <NavLink to="/candidate/requirement"
               className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
             >
               <span className="mx-2 text-sm font-medium">All Requirements</span>
             </NavLink>
             <NavLink
-            to="/candidate/requirement/add"
+            to="/candidate/application"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >

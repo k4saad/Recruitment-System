@@ -1,6 +1,8 @@
 package com.global.RecruitmentSystem.service;
 
 import com.global.RecruitmentSystem.enums.CandidateApplicationStatus;
+import com.global.RecruitmentSystem.exceptions.CandidateApplicationNotFound;
+import com.global.RecruitmentSystem.exceptions.ClientRequirementNotFound;
 import com.global.RecruitmentSystem.exceptions.DocumentMissing;
 import com.global.RecruitmentSystem.model.Candidate;
 import com.global.RecruitmentSystem.model.CandidateApplication;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -40,5 +43,16 @@ public class CandidateApplicationService {
         candidate.addCandidateApplication(candidateApplication);
         return candidateApplicationRepository.save(candidateApplication);
 
+    }
+
+    public List<CandidateApplication> getCandidateApplicationsByUsername(String username) {
+        Candidate candidate = candidateService.findByUsername(username);
+        return candidate.getCandidateApplications();
+    }
+
+    public CandidateApplication getCandidateApplicationById(Integer applicationId) {
+        return candidateApplicationRepository.findById(applicationId).orElseThrow(
+                () -> new CandidateApplicationNotFound("Client Requirement with id " + applicationId + "does not exist")
+        );
     }
 }

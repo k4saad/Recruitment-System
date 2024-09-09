@@ -88,7 +88,6 @@ public class CandidateService {
                 clientRequirements.add(clientRequirement);
             }
         }
-        log.info("all requirement : {}", clientRequirements);
         return clientRequirements;
     }
 }

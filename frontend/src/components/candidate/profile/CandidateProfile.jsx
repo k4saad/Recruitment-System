@@ -36,7 +36,11 @@ const CandidateProfile = () => {
         setErrorMessage("")
     }
 
-    
+    const handleLogout = () =>{
+      localStorage.removeItem("jwtToken")
+      localStorage.removeItem("username")
+      navigate("/")
+    }
     
 
     return(
@@ -94,7 +98,13 @@ const CandidateProfile = () => {
                             </Link>
                         </div>
                         <div>
-                    </div>
+                            <button
+                              onClick={handleLogout}
+                                className=" bg-[#00634D] mr-5 rounded-lg hover:bg-[#16473d] focus:bg-[#00634D]
+                                    text-white font-bold py-2 px-4  focus:outline-none mx-auto
+                                    focus:shadow-outline">Logout
+                                </button>
+                        </div>
                   </div>
                 </div>
               ) : (

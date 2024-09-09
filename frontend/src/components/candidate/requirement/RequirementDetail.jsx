@@ -48,7 +48,7 @@ const RequirementDetail = ({}) => {
                 setSuccessMessage("Applied successfully")
                 setTimeout(() => {
                     setSuccessMessage("")
-                    navigate("/candidate/requirement/all")
+                    navigate("/candidate/requirement")
                 }, 2000)
                 setErrorMessage("")
             }
@@ -104,7 +104,7 @@ const RequirementDetail = ({}) => {
                   </div>
                   <div  className="flex justify-center my-4">
                         <div>
-                            <Link to={"/candidate/requirement/all"}>
+                            <Link to={"/candidate/requirement"}>
                             <button
                                 className=" bg-[#00634D] mr-5 rounded-lg hover:bg-[#16473d] focus:bg-[#00634D]
                                     text-white font-bold py-2 px-4  focus:outline-none mx-auto
