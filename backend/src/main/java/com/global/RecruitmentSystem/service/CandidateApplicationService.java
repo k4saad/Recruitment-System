@@ -1,6 +1,7 @@
 package com.global.RecruitmentSystem.service;
 
 import com.global.RecruitmentSystem.enums.CandidateApplicationStatus;
+import com.global.RecruitmentSystem.enums.MedicalStatus;
 import com.global.RecruitmentSystem.exceptions.CandidateApplicationNotFound;
 import com.global.RecruitmentSystem.exceptions.ClientRequirementNotFound;
 import com.global.RecruitmentSystem.exceptions.DocumentMissing;
@@ -52,7 +53,48 @@ public class CandidateApplicationService {
 
     public CandidateApplication getCandidateApplicationById(Integer applicationId) {
         return candidateApplicationRepository.findById(applicationId).orElseThrow(
-                () -> new CandidateApplicationNotFound("Client Requirement with id " + applicationId + "does not exist")
+                () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
         );
+    }
+
+
+    public void updateStatusToUnderReview(Integer applicationId) {
+        CandidateApplication candidateApplication = candidateApplicationRepository.findById(applicationId)
+                .orElseThrow(
+                        () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+                );
+        candidateApplication.setStatus(CandidateApplicationStatus.UNDER_REVIEW);
+        candidateApplicationRepository.save(candidateApplication);
+    }
+
+    public List<CandidateApplication> getCandidateApplicationsByRequirementId(Integer requirementId) {
+          return candidateApplicationRepository.findByClientRequirementRequirementId(requirementId);
+    }
+
+    public void rejectApplicant(Integer applicationId) {
+        CandidateApplication candidateApplication = candidateApplicationRepository.findById(applicationId).orElseThrow(
+                () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+        );
+        if(candidateApplication.getInterview() != null){
+            candidateApplication.setInterview(null);
+        }
+        candidateApplication.setStatus(CandidateApplicationStatus.REJECTED);
+        candidateApplicationRepository.save(candidateApplication);
+    }
+
+    public void markAsFit(Integer applicationId) {
+        CandidateApplication candidateApplication = candidateApplicationRepository.findById(applicationId).orElseThrow(
+                () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+        );
+        candidateApplication.getCandidate().setMedicalStatus(MedicalStatus.FIT);
+        candidateApplicationRepository.save(candidateApplication);
+    }
+
+    public void markAsUnfit(Integer applicationId) {
+        CandidateApplication candidateApplication = candidateApplicationRepository.findById(applicationId).orElseThrow(
+                () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+        );
+        candidateApplication.getCandidate().setMedicalStatus(MedicalStatus.UNFIT);
+        candidateApplicationRepository.save(candidateApplication);
     }
 }

@@ -75,7 +75,7 @@ const ClientSideBar = () => {
               <span className="mx-2 text-sm font-medium">Existing Requirements</span>
             </NavLink>
             <NavLink
-            to="/client/requirement/add"
+            to="/client/add/requirement"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >
@@ -94,7 +94,7 @@ const ClientSideBar = () => {
               <span className="mx-2 text-sm font-medium">All Applicants</span>
             </NavLink>
             <NavLink
-            to="/client/applicants/add"
+            to="/client/applicants/selected"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >

@@ -39,38 +39,11 @@ const ApplicationDetail = ({}) => {
     const handleNotification = () => {
         setErrorMessage("")
     }
-    
 
-    const handleOnClick = async (e) => {
-      setIsSubmitting(true)
-        try{
-            const success = await applyToRequirement(localStorage.getItem("username"), requirement.requirementId)
-            if(success !== undefined){
-                setSuccessMessage("Applied successfully")
-                setTimeout(() => {
-                    setSuccessMessage("")
-                    navigate("/candidate/requirement/all")
-                }, 2000)
-                setErrorMessage("")
-            }
-            else{
-                setErrorMessage("Error applying to requirement")
-                setTimeout(() => {
-                    setErrorMessage("")
-                }, 5000);
-            }
-        }
-        catch(error){
-            setErrorMessage(error.message)
-            setTimeout(() => {
-                setErrorMessage("")
-            }, 5000);
-        }
-    }
 
     const handleWithdraw = async () => {
         try{
-            const success = await withdrawApplication(localStorage.getItem("username"), applicationId)
+            const success = await withdrawApplication(applicationId)
             if(success !== undefined){
                 setSuccessMessage("Withdrawn Successfully")
                 setTimeout(() => {
@@ -95,7 +68,7 @@ const ApplicationDetail = ({}) => {
 
     const handleAcceptOffer = async () => {
         try{
-            const success = await acceptOffer(localStorage.getItem("username"), applicationId)
+            const success = await acceptOffer(applicationId)
             if(success !== undefined){
                 setSuccessMessage("Offer accepted")
                 setTimeout(() => {
@@ -121,16 +94,16 @@ const ApplicationDetail = ({}) => {
 
     const handleRejectOffer = async () => {
         try{
-            const success = await rejectOffer(localStorage.getItem("username"), applicationId)
+            const success = await rejectOffer(applicationId)
             if(success !== undefined){
-                setSuccessMessage("Offer accepted")
+                setSuccessMessage("Offer rejected")
                 setTimeout(() => {
                     setSuccessMessage("")
                 }, 5000);
                 getApplicationDetail()
             }
             else{
-                setErrorMessage("Error accepting offer")
+                setErrorMessage("Error rejecting offer")
                 setTimeout(() => {
                     setErrorMessage("")
                 }, 5000);
@@ -239,13 +212,12 @@ const ApplicationDetail = ({}) => {
                   </div>
                   <div  className="flex justify-center my-4">
                         <div>
-                            <Link to={"/candidate/application"}>
                             <button
+                            onClick={() => navigate(-1)}
                                 className=" bg-[#00634D] mr-5 rounded-lg hover:bg-[#16473d] focus:bg-[#00634D]
                                     text-white font-bold py-2 px-4  focus:outline-none mx-auto
                                     focus:shadow-outline">Back
-                                </button>
-                            </Link>
+                            </button>
                         </div>
                         {(application.candidateApplicationStatus === "APPLIED" || 
                             application.candidateApplicationStatus === "UNDER_REVIEW" || 

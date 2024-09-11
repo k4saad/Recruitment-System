@@ -218,13 +218,12 @@ const EditCandidateProfile = () => {
               </div>
               <div  className="flex justify-center my-4">
                         <div>
-                            <Link to={"/candidate/profile"}>
                             <button
+                            onClick={() => navigate(-1)}
                                 className=" bg-[#00634D] mr-5 rounded-lg hover:bg-[#16473d] focus:bg-[#00634D]
                                     text-white font-bold py-2 px-4  focus:outline-none mx-auto
                                     focus:shadow-outline">Back
-                                </button>
-                            </Link>
+                            </button>
                         </div>
                         <div>
                         <button type="submit" 

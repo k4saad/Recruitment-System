@@ -40,6 +40,7 @@ const CandidateProfile = () => {
       localStorage.removeItem("jwtToken")
       localStorage.removeItem("username")
       navigate("/")
+      window.location.reload()
     }
     
 

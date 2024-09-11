@@ -20,6 +20,9 @@ import CandidateProfile from './components/candidate/profile/CandidateProfile.js
 import EditCandidateProfile from './components/candidate/profile/EditCandidateProfile.jsx'
 import AllApplication from './components/candidate/application/AllApplication.jsx'
 import ApplicationDetail from './components/candidate/application/ApplicationDetail.jsx'
+import AllApplicants from './components/client/applicants/AllApplicants.jsx'
+import ApplicantsByRequirement from './components/client/applicants/ApplicantsByRequirement.jsx'
+import ApplicantDetail from './components/client/applicants/ApplicantDetail.jsx'
 
 
 const router = createBrowserRouter(
@@ -34,8 +37,11 @@ const router = createBrowserRouter(
       <Route path='contact' element = {<Contact/>}/>      
       <Route path='login' element = {<Login/>}/>      
       <Route path='register' element = {<Register/>}/>   
-      <Route path='client/requirement/add' element = {<AddRequirement/>}/>   
-      <Route path='client/requirement' element = {<AllRequirement/>}/>   
+      <Route path='client/add/requirement' element = {<AddRequirement/>}/>   
+      <Route path='client/requirement' element = {<AllRequirement/>}/>
+      <Route path='client/applicants' element = {<AllApplicants/>}/>
+      <Route path='client/applicants/requirements/:requirementId' element = {<ApplicantsByRequirement/>}/>
+      <Route path='client/applicants/detail/:applicationId' element = {<ApplicantDetail/>}/>
       <Route path='candidate/requirement' element = {<AvailableRequirement/>}/>   
       <Route path='candidate/requirement/detail/:requirementId' element = {<RequirementDetail/>}/>   
       <Route path='candidate/profile' element = {<CandidateProfile/>}/>

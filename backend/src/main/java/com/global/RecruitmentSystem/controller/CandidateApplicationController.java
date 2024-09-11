@@ -1,16 +1,10 @@
 package com.global.RecruitmentSystem.controller;
 
-import com.global.RecruitmentSystem.exceptions.DocumentMissing;
-import com.global.RecruitmentSystem.exceptions.TicketRetrievalException;
-import com.global.RecruitmentSystem.exceptions.VisaDocumentRetrievalException;
+import com.global.RecruitmentSystem.exceptions.*;
 import com.global.RecruitmentSystem.model.CandidateApplication;
 import com.global.RecruitmentSystem.model.CandidateVisaDocument;
-import com.global.RecruitmentSystem.model.ClientRequirement;
 import com.global.RecruitmentSystem.model.Ticket;
-import com.global.RecruitmentSystem.response.CandidateApplicationCardResponse;
-import com.global.RecruitmentSystem.response.CandidateApplicationDetailResponse;
-import com.global.RecruitmentSystem.response.CandidateTicketResponse;
-import com.global.RecruitmentSystem.response.CandidateVisaDocumentResponse;
+import com.global.RecruitmentSystem.response.*;
 import com.global.RecruitmentSystem.service.CandidateApplicationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +59,8 @@ public class CandidateApplicationController {
         return ResponseEntity.ok(candidateApplicationCardResponses);
     }
 
+
+    @PreAuthorize("hasRole('ROLE_CANDIDATE')")
     @GetMapping("/detail/{applicationId}")
     public ResponseEntity<CandidateApplicationDetailResponse> getCandidateApplicationById(
             @PathVariable Integer applicationId
@@ -78,30 +74,161 @@ public class CandidateApplicationController {
         return ResponseEntity.ok(candidateApplicationDetailResponse);
     }
 
-    @PutMapping("/withdraw/{username}")
+
+    @PreAuthorize("hasRole('ROLE_CANDIDATE')")
+    @PutMapping("/withdraw/{applicationId}")
     public ResponseEntity<Boolean> withdrawApplication(
-            @RequestParam Integer applicationId
+            @PathVariable Integer applicationId
     ){
         // TODO -- Implement withdraw application
         return ResponseEntity.ok(false);
     }
 
-    @PutMapping("/accept/{username}")
+    @PreAuthorize("hasRole('ROLE_CANDIDATE')")
+    @PutMapping("/accept/{applicationId}")
     public ResponseEntity<Boolean> acceptOffer(
-            @RequestParam Integer applicationId
+            @PathVariable Integer applicationId
     ){
         // TODO -- Implement accept offer
         return ResponseEntity.ok(false);
     }
 
-    @PutMapping("/reject/{username}")
+    @PreAuthorize("hasRole('ROLE_CANDIDATE')")
+    @PutMapping("/reject/{applicationId}")
     public ResponseEntity<Boolean> rejectOffer(
-            @RequestParam Integer applicationId
+            @PathVariable Integer applicationId
     ){
         // TODO -- Implement reject offer
         return ResponseEntity.ok(false);
     }
 
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @PutMapping("/status/underreview/{applicationId}")
+    public ResponseEntity<Boolean> updateStatusToUnderReview(
+            @PathVariable Integer applicationId
+    ){
+        log.info("Received request to update application status to UNDER_REVIEW : {}", applicationId);
+        candidateApplicationService.updateStatusToUnderReview(applicationId);
+        return ResponseEntity.ok(true);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @GetMapping("/requirements/{requirementId}")
+    public ResponseEntity<List<ApplicantCardResponse>> getCandidateApplicationsByRequirement(
+            @PathVariable Integer requirementId
+    ){
+        log.info("Received request for CandidateApplications for requirementId : {}", requirementId);
+        List<ApplicantCardResponse> applicantCardResponses = new ArrayList<>();
+        log.info("Getting all CandidateApplications for requirementId : {}", requirementId);
+        List<CandidateApplication> candidateApplications = candidateApplicationService
+                .getCandidateApplicationsByRequirementId(requirementId);
+        log.info("Converting CandidateApplication to ApplicantCardResponse");
+        for(CandidateApplication candidateApplication : candidateApplications){
+            ApplicantCardResponse applicantCardResponse =
+                    getApplicantCardResponse(candidateApplication);
+            applicantCardResponses.add(applicantCardResponse);
+        }
+        log.info("Successfully converted CandidateApplication to ApplicantCardResponse");
+        return ResponseEntity.ok(applicantCardResponses);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @GetMapping("/detail/client/{applicationId}")
+    public ResponseEntity<CandidateApplicationDetailForClientResponse> getCandidateApplicationDetailForClientResponse(
+            @PathVariable Integer applicationId
+    ){
+        log.info("Received request for candidate application detail for client");
+        CandidateApplication candidateApplication = candidateApplicationService
+                .getCandidateApplicationById(applicationId);
+        log.info("Converting CandidateApplication to CandidateApplicationDetailForClientResponse");
+        CandidateApplicationDetailForClientResponse candidateApplicationDetailForClientResponse =
+                convertToCandidateApplicationDetailResponse(candidateApplication);
+        log.info("Successfully converted CandidateApplication to CandidateApplicationDetailForClientResponse");
+        return ResponseEntity.ok(candidateApplicationDetailForClientResponse);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @PutMapping("/reject/applicant/{applicationId}")
+    public ResponseEntity<Boolean> rejectApplicant(
+            @PathVariable Integer applicationId
+    ){
+        log.info("Request received to update application status to rejected");
+        candidateApplicationService.rejectApplicant(applicationId);
+        return ResponseEntity.ok(true);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @PutMapping("/fit/{applicationId}")
+    public ResponseEntity<Boolean> markApplicantAsFit(
+            @PathVariable Integer applicationId
+    ){
+        log.info("Request received to update application status to fit");
+        candidateApplicationService.markAsFit(applicationId);
+        return ResponseEntity.ok(true);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @PutMapping("/unfit/{applicationId}")
+    public ResponseEntity<Boolean> markApplicantAsUnfit(
+            @PathVariable Integer applicationId
+    ){
+        log.info("Request received to update application status to unfit");
+        candidateApplicationService.markAsUnfit(applicationId);
+        return ResponseEntity.ok(true);
+    }
+
+    private CandidateApplicationDetailForClientResponse convertToCandidateApplicationDetailResponse(CandidateApplication candidateApplication) {
+        CandidateVisaDocumentResponse candidateVisaDocumentResponse = candidateApplication.getCandidateVisaDocument() != null ?
+                getCandidateVisaDocumentResponse(candidateApplication.getCandidateVisaDocument()) : null;
+        CandidateTicketResponse candidateTicketResponse = candidateApplication.getTicket() != null ?
+                getCandidateTicketResponse(candidateApplication.getTicket()) : null;
+
+        byte[] resumeBytes = null;
+        Blob resumeBlob = candidateApplication.getCandidate().getResume();
+        byte[] medicalReportBytes = null;
+        Blob medicalReportBlob = candidateApplication.getCandidate().getMedicalReport();
+        if(resumeBlob != null){
+            try{
+                resumeBytes = resumeBlob.getBytes(1, (int) resumeBlob.length());
+            } catch (SQLException e) {
+                throw new ResumeRetrievalException("Error retrieving Candidate resume");
+            }
+        }
+        if(medicalReportBlob != null){
+            try{
+                medicalReportBytes = medicalReportBlob.getBytes(1, (int) medicalReportBlob.length());
+            } catch (SQLException e) {
+                throw new MedicalReportRetrievalException("Error retrieving Candidate medical report");
+            }
+        }
+
+        return new CandidateApplicationDetailForClientResponse(
+                candidateApplication.getApplicationId(), candidateApplication.getStatus(),
+                candidateApplication.getDateApplied(), candidateApplication.getInterview(),
+                candidateVisaDocumentResponse,
+                candidateTicketResponse,
+                resumeBytes,
+                medicalReportBytes,
+                candidateApplication.getClientRequirement().getRequirementId(),
+                candidateApplication.getClientRequirement().getTitle(),
+                candidateApplication.getClientRequirement().getMinSalary(),
+                candidateApplication.getClientRequirement().getMaxSalary(),
+                candidateApplication.getClientRequirement().getCurrency(),
+                candidateApplication.getClientRequirement().getLocation(),
+                candidateApplication.getCandidate().getName(),
+                candidateApplication.getCandidate().getMedicalStatus(),
+                candidateApplication.getCandidate().getMedicalValidity()
+        );
+
+    }
+
+    private ApplicantCardResponse getApplicantCardResponse(CandidateApplication candidateApplication) {
+        return new ApplicantCardResponse(
+                candidateApplication.getApplicationId(), candidateApplication.getStatus(),
+                candidateApplication.getCandidate().getName()
+        );
+    }
 
     private CandidateApplicationDetailResponse getCandidateApplicationDetailResponse(CandidateApplication candidateApplication) {
         CandidateVisaDocumentResponse candidateVisaDocumentResponse = candidateApplication.getCandidateVisaDocument() != null ?

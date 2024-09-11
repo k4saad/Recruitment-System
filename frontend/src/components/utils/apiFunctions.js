@@ -269,10 +269,10 @@ export async function getApplicationDetail(applicationId){
     }
 }
 
-export async function withdrawApplication(username, applicationId){
+export async function withdrawApplication(applicationId){
     try {
         const token = getToken();
-        const response = await api.put(`/applications/withdraw/${username}?applicationId=${applicationId}`,{},{
+        const response = await api.put(`/applications/withdraw/${applicationId}`,{},{
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -283,10 +283,10 @@ export async function withdrawApplication(username, applicationId){
     }
 }
 
-export async function acceptOffer(username, applicationId){
+export async function acceptOffer(applicationId){
     try {
         const token = getToken();
-        const response = await api.put(`/applications/accept/${username}?applicationId=${applicationId}`,{},{
+        const response = await api.put(`/applications/accept/${applicationId}`,{},{
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -297,10 +297,10 @@ export async function acceptOffer(username, applicationId){
     }
 }
 
-export async function rejectOffer(username, applicationId){
+export async function rejectOffer(applicationId){
     try {
         const token = getToken();
-        const response = await api.put(`/applications/reject/${username}?applicationId=${applicationId}`,{},{
+        const response = await api.put(`/applications/reject/${applicationId}`,{},{
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -308,5 +308,89 @@ export async function rejectOffer(username, applicationId){
         return response.data
     } catch (error) {
         throw new Error("Error : Rejecting offer")
+    }
+}
+
+export async function updateAppliedStatus(applicationId){
+    try {
+        const token = getToken();
+        const response = await api.put(`/applications/status/underreview/${applicationId}`,{},{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : updating status")
+    }
+}
+
+export async function getApplicantsByRequirement(requirementId){
+    try {
+        const token = getToken();
+        const response = await api.get(`/applications/requirements/${requirementId}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching applications")
+    }
+}
+
+export async function rejectApplicant(applicationId){
+    try {
+        const token = getToken();
+        const response = await api.put(`/applications/reject/applicant/${applicationId}`,{},{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Rejecting application")
+    }
+}
+
+export async function candidateFit(applicationId){
+    try {
+        const token = getToken();
+        const response = await api.put(`/applications/fit/${applicationId}`,{},{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Rejecting application")
+    }
+}
+
+export async function candidateUnfit(applicationId){
+    try {
+        const token = getToken();
+        const response = await api.put(`/applications/unfit/${applicationId}`,{},{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Rejecting application")
+    }
+}
+
+export async function getApplicantDetailForClient(applicationId){
+    try {
+        const token = getToken();
+        const response = await api.get(`/applications/detail/client/${applicationId}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching application detail")
     }
 }
