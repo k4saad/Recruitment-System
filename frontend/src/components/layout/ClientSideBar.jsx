@@ -112,7 +112,7 @@ const ClientSideBar = () => {
               <span className="mx-2 text-sm font-medium">All Interview</span>
             </NavLink>
             <NavLink
-            to="/client/interview/upcoming"
+            to="/client/interview/upcomming"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >

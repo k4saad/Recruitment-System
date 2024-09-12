@@ -78,6 +78,7 @@ public class CandidateApplicationService {
         if(candidateApplication.getInterview() != null){
             candidateApplication.setInterview(null);
         }
+        candidateApplication.setInterview(null);
         candidateApplication.setStatus(CandidateApplicationStatus.REJECTED);
         candidateApplicationRepository.save(candidateApplication);
     }

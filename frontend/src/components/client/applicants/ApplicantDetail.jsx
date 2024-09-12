@@ -3,6 +3,7 @@ import ErrorNotification from "../../common/ErrorNotification";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { candidateFit, candidateUnfit, getApplicantDetailForClient, rejectApplicant, updateAppliedStatus } from "../../utils/apiFunctions";
 import SuccessNotification from "../../common/SuccessNotification";
+import moment from 'moment';
 
 const ApplicantDetail = () => {
     const [applicant, setApplicant] = useState();
@@ -152,18 +153,25 @@ const ApplicantDetail = () => {
                       <p className="my-5"><strong>Applied for: </strong>{applicant.clientRequirementTitle}</p>
                       <p className="my-5"><strong>Salary: </strong>{applicant.clientRequirementMinSalary} - {applicant.clientRequirementMaxSalary} {applicant.clientRequirementCurrency}</p>
                       <p className="my-5"><strong>Location: </strong>{applicant.clientRequirementLocation}</p>
-                      <p className="my-5"><strong>Interview: </strong>{applicant.interview !== null ? (
-                        <>Scheduled for {
-                            applicant.interview.interviewTimestamp
-                        }
-                        </>
-                      ) : (
-                        <>
-                            Not Scheduled
-                        </>
-                      )}
+                      <p className="my-5">
+                        <strong>Interview: </strong>
+                        {applicant.interview && applicant.interview.interviewTimestamp ? (
+                            applicant.interview.status === 'SCHEDULED' ? (
+                            <>Scheduled for: {moment(applicant.interview.interviewTimestamp).format('MMMM Do YYYY, h:mm A')}</>
+                            ) : applicant.interview.status === 'COMPLETED' ? (
+                            <>Completed</>
+                            ) : applicant.interview.status === 'CANCELLED' ? (
+                            <>Cancelled</>
+                            ) : (
+                            <>Status Unknown</>
+                            )
+                        ) : (
+                            <>Not Scheduled</>
+                        )}
+                        </p>
+
                       <p className="my-5"><strong>Status:</strong> {applicant.candidateApplicationStatus}</p>
-                      </p>
+                      
                       <p className="my-5"><strong>Resume:</strong></p>
                       {applicant.resume && (
                             <embed

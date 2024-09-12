@@ -23,6 +23,8 @@ import ApplicationDetail from './components/candidate/application/ApplicationDet
 import AllApplicants from './components/client/applicants/AllApplicants.jsx'
 import ApplicantsByRequirement from './components/client/applicants/ApplicantsByRequirement.jsx'
 import ApplicantDetail from './components/client/applicants/ApplicantDetail.jsx'
+import AddInterview from './components/client/interview/AddInterview.jsx'
+import UpcommingInterview from './components/client/interview/UpcommingInterview.jsx'
 
 
 const router = createBrowserRouter(
@@ -42,6 +44,8 @@ const router = createBrowserRouter(
       <Route path='client/applicants' element = {<AllApplicants/>}/>
       <Route path='client/applicants/requirements/:requirementId' element = {<ApplicantsByRequirement/>}/>
       <Route path='client/applicants/detail/:applicationId' element = {<ApplicantDetail/>}/>
+      <Route path='client/interview/schedule/:applicationId' element = {<AddInterview/>}/>
+      <Route path='client/interview/upcomming' element = {<UpcommingInterview/>}/>
       <Route path='candidate/requirement' element = {<AvailableRequirement/>}/>   
       <Route path='candidate/requirement/detail/:requirementId' element = {<RequirementDetail/>}/>   
       <Route path='candidate/profile' element = {<CandidateProfile/>}/>

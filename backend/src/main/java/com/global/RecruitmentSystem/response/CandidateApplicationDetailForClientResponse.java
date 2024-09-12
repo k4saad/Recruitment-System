@@ -59,6 +59,7 @@ public class CandidateApplicationDetailForClientResponse {
         this.ticket = ticket;
         this.resume = resumeBytes != null ? Base64.encodeBase64String(resumeBytes) : null;
         this.medicalDocument = medicalDocumentBytes != null ? Base64.encodeBase64String(medicalDocumentBytes) : null;
+        this.clientRequirementId = clientRequirementId;
         this.clientRequirementTitle = clientRequirementTitle;
         this.clientRequirementMinSalary = clientRequirementMinSalary;
         this.clientRequirementMaxSalary = clientRequirementMaxSalary;

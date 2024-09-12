@@ -394,3 +394,32 @@ export async function getApplicantDetailForClient(applicationId){
         throw new Error("Error : Fetching application detail")
     }
 }
+
+export const scheduleInterview = async (applicationId, time) => {
+    try {
+        const token = getToken();
+        const response = await api.post(`/interview/schedule/${applicationId}?time=${time}`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Failed to add interview:", error);
+        throw error;
+    }
+};
+
+export async function getUpcommingInterviews(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/interview/upcomming/${username}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching interviews")
+    }
+}

@@ -64,4 +64,10 @@ public class CandidateApplication {
             orphanRemoval = true
     )
     private Ticket ticket;
+
+    public void addInterview(Interview interview) {
+        this.interview = interview;
+        this.status = CandidateApplicationStatus.SELECTED_FOR_INTERVIEW;
+        interview.setCandidateApplication(this);
+    }
 }

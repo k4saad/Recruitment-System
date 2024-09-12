@@ -1,5 +1,6 @@
 package com.global.RecruitmentSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.global.RecruitmentSystem.enums.InterviewStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class Interview {
 
     @OneToOne
     @JoinColumn(name = "candidate_application_id")
+    @JsonIgnore
     private CandidateApplication candidateApplication;
 
     @Enumerated(EnumType.STRING)

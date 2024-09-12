@@ -130,19 +130,6 @@ const Header = () => {
                   Contact
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/rooms"
-                  className={({ isActive }) =>
-                    ` block py-2 pr-4 pl-3 duration-200 border-b ${
-                      isActive ? "text-[#00634D]" : ""
-                    } border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-[#00634D] lg:p-0`
-                  }
-                >
-                  Rooms and Suites
-                </NavLink>
-              </li>
-              {/* TODO - Add bookings section if user is logged in other wise dosnt show anything */}
             </ul>
           </div>
         </div>
