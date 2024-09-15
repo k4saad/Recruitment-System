@@ -29,6 +29,8 @@ public class Interview {
     @Enumerated(EnumType.STRING)
     private InterviewStatus status;
 
+    private String meetingId;
+
     private LocalDateTime interviewTimestamp;
 
 }

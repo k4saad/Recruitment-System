@@ -32,7 +32,7 @@ const AddInterview = () => {
                 setSuccessMessage("Interview scheduled successfully")
                 setTimeout(() => {
                     setSuccessMessage("")
-                    navigate("/client/interview/upcoming")
+                    navigate("/client/interview/upcomming")
                 }, 5000);
                 setErrorMessage("")
             }

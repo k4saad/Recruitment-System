@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
+import { useParams } from 'react-router-dom';
 
 
 function randomID(len) {
@@ -23,11 +24,11 @@ export function getUrlParams(
 }
 
 export default function Interview() {
-      const roomID = getUrlParams().get('roomID') || randomID(5);
+      const roomID = getUrlParams().get('roomID');
       let myMeeting = async (element) => {
      // generate Kit Token
-      const appID = ;
-      const serverSecret = "";
+      const appID = 1990302116;
+      const serverSecret = "6d753fb6b4bd67e6563728a69191cb59";
       const kitToken =  ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID,  randomID(5),  randomID(5));
 
     

@@ -25,7 +25,9 @@ import ApplicantsByRequirement from './components/client/applicants/ApplicantsBy
 import ApplicantDetail from './components/client/applicants/ApplicantDetail.jsx'
 import AddInterview from './components/client/interview/AddInterview.jsx'
 import UpcommingInterview from './components/client/interview/UpcommingInterview.jsx'
-
+import InterviewClient from './components/client/interview/InterviewClient.jsx'
+import InterviewCandidate from './components/candidate/interview/InterviewCandidate.jsx'
+import JoinInterview from './components/candidate/interview/JoinInterview.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -52,6 +54,10 @@ const router = createBrowserRouter(
       <Route path='candidate/profile/edit' element = {<EditCandidateProfile/>}/>
       <Route path='candidate/application' element = {<AllApplication/>}/>
       <Route path='candidate/application/detail/:applicationId' element = {<ApplicationDetail/>}/>
+      <Route path='candidate/interview/upcoming' element = {<JoinInterview/>}/>
+      <Route path='interview/start/:interviewId' element = {<InterviewClient/>}/>
+      <Route path='interview/join' element = {<InterviewCandidate/>}/>
+    
     </Route>
   )
 )

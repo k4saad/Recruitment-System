@@ -32,11 +32,13 @@ public class ClientRequirementController {
 
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping("/{username}")
-    public ResponseEntity<ClientRequirement>  addRequirement(
+    public ResponseEntity<Boolean>  addRequirement(
             @PathVariable String username,
             @RequestBody ClientRequirement newClientRequirement
     ){
-        return ResponseEntity.ok(clientRequirementService.addRequirement(username, newClientRequirement));
+        clientRequirementService.addRequirement(username, newClientRequirement);
+        return ResponseEntity.ok(true);
+
     }
 
     @PreAuthorize("hasRole('ROLE_CLIENT') or hasRole('ROLE_ADMIN')")

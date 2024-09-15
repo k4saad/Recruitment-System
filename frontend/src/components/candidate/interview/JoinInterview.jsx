@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUpcommingInterviews } from "../../utils/apiFunctions";
+import { getUpcommingInterviewsForCandidate } from "../../utils/apiFunctions";
 import Paginator from "../../common/Paginator";
-import InterviewCard from "./InterviewCard";
+import JoinInterviewCard from "../interview/JoinInterviewCard"
 
 
-const UpcommingInterview = () => {
+const JoinInterview = () => {
 
     const [allInterviews, setAllInterviews] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ const UpcommingInterview = () => {
     const fetchUpcommingInterviews = async () => {
       setIsLoading(true);
       try {
-        const data = await getUpcommingInterviews(localStorage.getItem("username"));
+        const data = await getUpcommingInterviewsForCandidate(localStorage.getItem("username"));
         setAllInterviews(data);
         setIsLoading(false);
       } catch (error) {
@@ -39,7 +39,7 @@ const UpcommingInterview = () => {
     useEffect(() => {
       const token = localStorage.getItem("jwtToken");
           if (!token) {
-              navigate("/login/client"); 
+              navigate("/login/candidate"); 
               window.location.reload();
           }
           fetchUpcommingInterviews();
@@ -63,7 +63,7 @@ const UpcommingInterview = () => {
                   ) : (
                     <div className="grid grid-cols-2 lg:flex-row justify-around">
                       {currentInterviews.map((interview) => (
-                        <InterviewCard interview={interview} key={interview.interviewId} />
+                        <JoinInterviewCard interview={interview} key={interview.interviewId} />
                       ))}
                     </div>
                   )}
@@ -82,4 +82,4 @@ const UpcommingInterview = () => {
     )
 }
 
-export default UpcommingInterview;
+export default JoinInterview;

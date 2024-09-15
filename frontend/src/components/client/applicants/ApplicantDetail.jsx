@@ -16,6 +16,7 @@ const ApplicantDetail = () => {
     (async () => {
         if(applicant && applicant.candidateApplicationStatus === "APPLIED"){
             updateAppliedStatus(applicationId)
+            window.location.reload()
         }
       })();
     useEffect(() => {
@@ -244,7 +245,7 @@ const ApplicantDetail = () => {
                         }
 
                         {
-                            applicant.candidateApplicationStatus === "UNDER_REVIEW" 
+                            (applicant.candidateApplicationStatus === "UNDER_REVIEW" && !applicant.interview)
                             &&
                             <div>
                             <Link to={`/client/interview/schedule/${applicationId}`}>
@@ -255,7 +256,16 @@ const ApplicantDetail = () => {
                                 </button>
                             </Link>
                             </div>
-                        }
+                        }                    
+                        <div>
+                        <Link to={`/client/pay/${applicationId}`}>
+                        <button
+                            className=" bg-[#00634D] mr-5 rounded-lg hover:bg-[#16473d] focus:bg-[#00634D]
+                                text-white font-bold py-2 px-4  focus:outline-none mx-auto
+                                focus:shadow-outline">Select Candidate
+                            </button>
+                        </Link>
+                        </div>
                   </div>
                 </div>
               ) : (

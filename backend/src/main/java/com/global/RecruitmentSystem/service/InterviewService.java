@@ -27,4 +27,29 @@ public class InterviewService {
         candidateApplication.addInterview(interview);
         return interviewRepository.save(interview);
     }
+
+    public void setMeetingId(Integer interviewId, String meetingId) {
+        Interview interview = interviewRepository.findById(interviewId).orElseThrow(
+                () -> new RuntimeException("Interview not found")
+        );
+        interview.setMeetingId(meetingId);
+        interviewRepository.save(interview);
+    }
+
+    public void updateInterviewStatusToOngoing(Integer interviewId) {
+        Interview interview = interviewRepository.findById(interviewId).orElseThrow(
+                () -> new RuntimeException("Interview not found")
+        );
+        interview.setStatus(InterviewStatus.ONGOING);
+        interviewRepository.save(interview);
+    }
+
+    public void updateInterviewStatusToCompleted(Integer interviewId) {
+        Interview interview = interviewRepository.findById(interviewId).orElseThrow(
+                () -> new RuntimeException("Interview not found")
+        );
+        interview.setStatus(InterviewStatus.COMPLETED);
+        interviewRepository.save(interview);
+
+    }
 }

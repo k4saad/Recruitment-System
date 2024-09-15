@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import ErrorNotification from "../../common/ErrorNotification";
 import SuccessNotification from "../../common/SuccessNotification"
 import { getApplicationDetail, withdrawApplication } from "../../utils/apiFunctions";
+import moment from "moment";
 
 const ApplicationDetail = ({}) => {
     const [application, setApplication] = useState();
@@ -157,7 +158,7 @@ const ApplicationDetail = ({}) => {
                         (
                             <>
                                 <p className="my-5"><strong>Interview:</strong> {application.interview.status}</p>
-                                <p className="my-5"><strong>Interview Timing:</strong> {application.interview.interviewTimestamp}</p>
+                                <p className="my-5"><strong>Interview Timing:</strong> {moment(application.interview.interviewTimestamp).format('MMMM Do YYYY, h:mm A')}</p>
                             </>
                         )
                       }

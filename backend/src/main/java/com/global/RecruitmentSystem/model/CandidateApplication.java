@@ -19,7 +19,6 @@ public class CandidateApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer applicationId;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;

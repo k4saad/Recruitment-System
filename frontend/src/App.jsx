@@ -10,13 +10,14 @@ import CandidateSideBar from './components/layout/CandidateSideBar'
 function App() {
   const isLogin = location.pathname.startsWith('/login');
   const isRegister = location.pathname.startsWith('/register');
+  const isInterview = location.pathname.startsWith('/interview');
   const isClient = location.pathname.startsWith('/client');
   const isCandidate = location.pathname.startsWith('/candidate');
   
 
   return (
     <>
-      {isLogin || isRegister ? (
+      {isLogin || isRegister || isInterview ? (
         <Outlet />
       ) : (
         <>

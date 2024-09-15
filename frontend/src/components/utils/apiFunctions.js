@@ -423,3 +423,62 @@ export async function getUpcommingInterviews(username){
         throw new Error("Error : Fetching interviews")
     }
 }
+
+export async function postMeetingId(interviewId, meetingId){
+    try {
+        const token = getToken();
+        const response = await api.put(`/interview/meetingId/${interviewId}?meetingId=${meetingId}`,{}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        console.log("Error : Posting meetingId")
+        throw new Error("Error : Posting meetingId")
+    }
+}
+
+export async function getUpcommingInterviewsForCandidate(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/interview/upcomming/candidate/${username}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching interviews")
+    }
+}
+
+export async function updateInterviewStatusToOngoing(interviewId){
+    try {
+        const token = getToken();
+        const response = await api.put(`/interview/update/status/ongoing/${interviewId}`,{}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        console.log("Error : Updating status")
+        throw new Error("Error : Updating status")
+    }
+}
+
+export async function updateInterStatusToCompleted(interviewId){
+    try {
+        const token = getToken();
+        const response = await api.put(`/interview/update/status/completed/${interviewId}`,{}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        console.log("Error : Updating status")
+        throw new Error("Error : Updating status")
+    }
+}
