@@ -93,30 +93,17 @@ const ClientSideBar = () => {
               >
               <span className="mx-2 text-sm font-medium">All Applicants</span>
             </NavLink>
-            <NavLink
-            to="/client/applicants/selected"
-            className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
-                isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
-              >
-              <span className="mx-2 text-sm font-medium">Selected Applicant</span>
-            </NavLink>
           </div>
           <div className="space-y-3 ">
             <label className="px-3 text-xs font-semibold uppercase ">
               Interview
             </label>
-            <NavLink to="/client/interview/all"
-              className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
-                isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
-            >
-              <span className="mx-2 text-sm font-medium">All Interview</span>
-            </NavLink>
             <NavLink
             to="/client/interview/upcomming"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >
-              <span className="mx-2 text-sm font-medium">Upcoming Interview</span>
+              <span className="mx-2 text-sm font-medium">All Interview</span>
             </NavLink>
           </div>
           <div className="space-y-3 ">

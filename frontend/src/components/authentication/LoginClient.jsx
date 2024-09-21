@@ -85,10 +85,7 @@ export function LoginClient() {
                   <label htmlFor="" className="text-base font-medium text-[#00634D]">
                     {' '}
                     Password{' '}
-                  </label>
-                  <Link className="text-sm font-TypewcondRegular text-[#00634D] hover:underline"
-                  to="/reset-password" >{' '}
-                  Forgot password?{' '}</Link>
+                  </label>                  
                 </div>
                 <div className="mt-2">
                   <input

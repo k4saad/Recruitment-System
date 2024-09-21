@@ -1,17 +1,23 @@
 package com.global.RecruitmentSystem.controller;
 
+import com.global.RecruitmentSystem.enums.TicketStatus;
 import com.global.RecruitmentSystem.exceptions.*;
 import com.global.RecruitmentSystem.model.CandidateApplication;
 import com.global.RecruitmentSystem.model.CandidateVisaDocument;
 import com.global.RecruitmentSystem.model.Ticket;
+import com.global.RecruitmentSystem.repository.CandidateApplicationRepository;
 import com.global.RecruitmentSystem.response.*;
 import com.global.RecruitmentSystem.service.CandidateApplicationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -175,6 +181,34 @@ public class CandidateApplicationController {
     ){
         log.info("Request received to update application status to unfit");
         candidateApplicationService.markAsUnfit(applicationId);
+        return ResponseEntity.ok(true);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @PutMapping("/uploadTicket/{applicationId}")
+    public ResponseEntity<Boolean> uploadTicket(
+            @PathVariable Integer applicationId,
+            @RequestParam(required = false) MultipartFile ticketFile
+    ) throws IOException {
+        log.info("Received request to upload ticket document for application id : {}",applicationId);
+        if(ticketFile.isEmpty()){
+            log.warn("Ticket file is not received");
+        }
+        candidateApplicationService.addTicket(applicationId, ticketFile);
+        return ResponseEntity.ok(true);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @PutMapping("/uploadVisa/{applicationId}")
+    public ResponseEntity<Boolean> uploadVisa(
+            @PathVariable Integer applicationId,
+            @RequestParam(required = false) MultipartFile visaFile
+    ) throws IOException {
+        log.info("Recived request to upload visa document for application id : {}" , applicationId);
+        if(visaFile.isEmpty()){
+            log.warn("Visa file is not received");
+        }
+        candidateApplicationService.addVisa(applicationId, visaFile);
         return ResponseEntity.ok(true);
     }
 

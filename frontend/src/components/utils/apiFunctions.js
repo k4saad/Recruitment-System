@@ -482,3 +482,80 @@ export async function updateInterStatusToCompleted(interviewId){
         throw new Error("Error : Updating status")
     }
 }
+
+export async function uploadTicket(applicationId,ticket){
+    const formData = new FormData()
+    formData.append("ticketFile", ticket)
+    try{
+        const token = getToken();
+        const response = await api.put(`/applications/uploadTicket/${applicationId}`,formData,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response
+    }
+    catch (error){
+        throw new Error("Error : Uploading ticket")
+    }
+}
+
+export async function uploadVisa(applicationId,visa){
+    const formData = new FormData()
+    formData.append("visaFile", visa)
+    try{
+        const token = getToken();
+        const response = await api.put(`/applications/uploadVisa/${applicationId}`,formData,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response
+    }
+    catch (error){
+        throw new Error("Error : Uploading visa")
+    }
+}
+
+export async function pay(applicationId){
+    try{
+        const token = getToken();
+        const response = await api.post(`/payment/${applicationId}`,{},{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response
+    }
+    catch (error){
+        throw new Error("Error : Payment failed")
+    }
+}
+
+export async function getSelectedApplicants(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/client/selected/applicants/${username}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching applications")
+    }
+}
+
+export async function getClientDetails(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/client/${username}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching details")
+    }
+}

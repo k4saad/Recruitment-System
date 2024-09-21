@@ -28,6 +28,8 @@ import UpcommingInterview from './components/client/interview/UpcommingInterview
 import InterviewClient from './components/client/interview/InterviewClient.jsx'
 import InterviewCandidate from './components/candidate/interview/InterviewCandidate.jsx'
 import JoinInterview from './components/candidate/interview/JoinInterview.jsx'
+import Payment from './components/payment/Payment.jsx'
+import ClientProfile from './components/client/profile/ClientProfile.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +50,7 @@ const router = createBrowserRouter(
       <Route path='client/applicants/detail/:applicationId' element = {<ApplicantDetail/>}/>
       <Route path='client/interview/schedule/:applicationId' element = {<AddInterview/>}/>
       <Route path='client/interview/upcomming' element = {<UpcommingInterview/>}/>
+      <Route path='client/profile' element = {<ClientProfile/>}/>
       <Route path='candidate/requirement' element = {<AvailableRequirement/>}/>   
       <Route path='candidate/requirement/detail/:requirementId' element = {<RequirementDetail/>}/>   
       <Route path='candidate/profile' element = {<CandidateProfile/>}/>
@@ -57,6 +60,7 @@ const router = createBrowserRouter(
       <Route path='candidate/interview/upcoming' element = {<JoinInterview/>}/>
       <Route path='interview/start/:interviewId' element = {<InterviewClient/>}/>
       <Route path='interview/join' element = {<InterviewCandidate/>}/>
+      <Route path='client/pay/:applicationId' element = {<Payment/>}/>
     
     </Route>
   )

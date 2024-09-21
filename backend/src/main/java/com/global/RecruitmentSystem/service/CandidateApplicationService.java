@@ -2,17 +2,22 @@ package com.global.RecruitmentSystem.service;
 
 import com.global.RecruitmentSystem.enums.CandidateApplicationStatus;
 import com.global.RecruitmentSystem.enums.MedicalStatus;
+import com.global.RecruitmentSystem.enums.TicketStatus;
 import com.global.RecruitmentSystem.exceptions.CandidateApplicationNotFound;
 import com.global.RecruitmentSystem.exceptions.ClientRequirementNotFound;
 import com.global.RecruitmentSystem.exceptions.DocumentMissing;
-import com.global.RecruitmentSystem.model.Candidate;
-import com.global.RecruitmentSystem.model.CandidateApplication;
-import com.global.RecruitmentSystem.model.ClientRequirement;
+import com.global.RecruitmentSystem.exceptions.InternalServerException;
+import com.global.RecruitmentSystem.model.*;
 import com.global.RecruitmentSystem.repository.CandidateApplicationRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -96,6 +101,40 @@ public class CandidateApplicationService {
                 () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
         );
         candidateApplication.getCandidate().setMedicalStatus(MedicalStatus.UNFIT);
+        candidateApplicationRepository.save(candidateApplication);
+    }
+
+
+    public void addTicket(Integer applicationId, MultipartFile ticketFile) throws IOException {
+        Ticket ticket = Ticket.builder()
+                .status(TicketStatus.BOOKED)
+                .build();
+        byte[] ticketBytes = ticketFile != null ? ticketFile.getBytes() : null;
+        CandidateApplication candidateApplication = getCandidateApplicationById(applicationId);
+        if(ticketBytes != null && ticketBytes.length > 0){
+            try{
+                ticket.setTicket(new SerialBlob(ticketBytes));
+            }catch (SQLException exception){
+                throw new InternalServerException("Error : Uploading ticket");
+            }
+        }
+        candidateApplication.addTicket(ticket);
+        candidateApplicationRepository.save(candidateApplication);
+
+    }
+
+    public void addVisa(Integer applicationId, MultipartFile visaFile) throws IOException {
+        CandidateVisaDocument visa = new CandidateVisaDocument();
+        byte[] visaBytes = visaFile != null ? visaFile.getBytes() : null;
+        CandidateApplication candidateApplication = getCandidateApplicationById(applicationId);
+        if(visaBytes != null && visaBytes.length > 0){
+            try{
+                visa.setVisaDocument(new SerialBlob(visaBytes));
+            }catch (SQLException exception){
+                throw new InternalServerException("Error : Uploading visa");
+            }
+        }
+        candidateApplication.addVisa(visa);
         candidateApplicationRepository.save(candidateApplication);
     }
 }

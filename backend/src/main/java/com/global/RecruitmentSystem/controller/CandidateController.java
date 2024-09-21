@@ -82,6 +82,7 @@ public class CandidateController {
                 candidate.getName(), candidate.getContactNumber(),
                 resumeBytes, medicalReportBytes, candidate.getMedicalStatus(),
                 candidate.getMedicalValidity(), candidate.getUsername()
+
         );
     }
 }

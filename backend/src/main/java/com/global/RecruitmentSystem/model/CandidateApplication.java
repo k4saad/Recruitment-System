@@ -69,4 +69,19 @@ public class CandidateApplication {
         this.status = CandidateApplicationStatus.SELECTED_FOR_INTERVIEW;
         interview.setCandidateApplication(this);
     }
+
+    public void addPayment(Payment payment) {
+        this.payment = payment;
+        this.status = CandidateApplicationStatus.SELECTED;
+        payment.setCandidateApplication(this);
+    }
+    public void addTicket(Ticket ticket){
+        this.ticket = ticket;
+        ticket.setCandidateApplication(this);
+    }
+
+    public void addVisa(CandidateVisaDocument visa) {
+        this.candidateVisaDocument = visa;
+        visa.setCandidateApplication(this);
+    }
 }
