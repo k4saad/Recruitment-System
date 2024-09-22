@@ -559,3 +559,55 @@ export async function getClientDetails(username){
         throw new Error("Error : Fetching details")
     }
 }
+
+export const loginAdmin = async (user) => {
+	try {
+		const response = await api.post("/auth/login/admin", user)
+		if (response.status >= 200 && response.status < 300) {
+			return response.data
+		} else {
+			return null
+		}
+	} catch (error) {
+        if(error.response && error.response.data){
+            console.error(error.response.data)
+        }
+        else{
+            console.error(error)
+        }
+		return null
+	}
+}
+
+export async function getAllClientsForAdmin(){
+    try {
+        const token = getToken();
+        const response = await api.get(`/client/all`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching applications")
+    }
+}
+
+export async function getResetLink(email){
+    try {
+        const response = await api.post(`/auth/forgot-password/${email}`, {})
+        return response.data
+    } catch (error) {
+        throw new Error("Error sending reset link. Please try again.")
+    }
+}
+
+export async function updatePassword(token, newPassword){
+    try {
+        const response = await api.post(`/auth/reset-password?token=${token}&newPassword=${newPassword}`, {})
+        return response.data
+    } catch (error) {
+        throw new Error("Error sending reset link. Please try again.")
+    }
+}
+

@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SecurityConfig {
 
-    // This is to make customize userDetail rather then default one
+    // This is to make customize userDetail rather than default one
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -41,7 +41,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request
                                 .requestMatchers("/auth/register/candidate","/auth/login/candidate",
-                                        "/auth/register/client","/auth/login/client")
+                                        "/auth/register/client","/auth/login/client", "/auth/login/admin",
+                                        "/auth/forgot-password/{email}", "/auth/reset-password")
                                 .permitAll()
                                 .anyRequest().authenticated())
                 // This will redirect to the login form and authenticate

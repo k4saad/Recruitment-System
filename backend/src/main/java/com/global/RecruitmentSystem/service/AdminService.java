@@ -1,33 +1,35 @@
 package com.global.RecruitmentSystem.service;
 
-import com.global.RecruitmentSystem.model.Client;
-import com.global.RecruitmentSystem.repository.ClientRepository;
+import com.global.RecruitmentSystem.exceptions.InternalServerException;
+import com.global.RecruitmentSystem.model.Admin;
+import com.global.RecruitmentSystem.model.Candidate;
+import com.global.RecruitmentSystem.model.CandidateApplication;
+import com.global.RecruitmentSystem.model.ClientRequirement;
+import com.global.RecruitmentSystem.repository.AdminRepository;
+import com.global.RecruitmentSystem.repository.CandidateRepository;
 import com.global.RecruitmentSystem.security.User;
 import com.global.RecruitmentSystem.security.service.JWTService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ClientService {
-    private ClientRepository clientRepository;
+@Slf4j
+public class AdminService {
+    private AdminRepository adminRepository;
     private AuthenticationManager authenticationManager;
     private JWTService jwtService;
 
-
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(5);
-
-
-    public Client register(Client client){
-        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-        return clientRepository.save(client);
-    }
 
 
     public String verify(User user) {
@@ -42,20 +44,7 @@ public class ClientService {
         else
             return "failure";
     }
-
-    public Client findByUsername(String username) {
-        return clientRepository.findByUsername(username);
-    }
-
-    public List<Client> findAllClient() {
-        return clientRepository.findAll();
-    }
-
-    public Client findByEmail(String email) {
-        return clientRepository.findByEmail(email);
-    }
-
-    public void save(Client client) {
-        clientRepository.save(client);
+    public Admin findByUsername(String username) {
+        return adminRepository.findByUsername(username);
     }
 }

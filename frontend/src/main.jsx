@@ -30,6 +30,11 @@ import InterviewCandidate from './components/candidate/interview/InterviewCandid
 import JoinInterview from './components/candidate/interview/JoinInterview.jsx'
 import Payment from './components/payment/Payment.jsx'
 import ClientProfile from './components/client/profile/ClientProfile.jsx'
+import LoginAdmin from './components/authentication/LoginAdmin.jsx'
+import ClientsForAdmin from './components/admin/ClientsForAdmin.jsx'
+import ClientDetails from './components/admin/ClientDetails.jsx'
+import ForgotPassword from './components/authentication/ForgotPassword.jsx'
+import ResetPassword from './components/authentication/ResetPassword.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -61,6 +66,11 @@ const router = createBrowserRouter(
       <Route path='interview/start/:interviewId' element = {<InterviewClient/>}/>
       <Route path='interview/join' element = {<InterviewCandidate/>}/>
       <Route path='client/pay/:applicationId' element = {<Payment/>}/>
+      <Route path='login/admin' element = {<LoginAdmin/>}/>
+      <Route path='admin/client' element = {<ClientsForAdmin/>}/>
+      <Route path='admin/client/detail/:clientId' element = {<ClientDetails/>}/>
+      <Route path='/forgot-password' element = {<ForgotPassword/>}/>
+      <Route path='/reset-password' element = {<ResetPassword/>}/>
     
     </Route>
   )

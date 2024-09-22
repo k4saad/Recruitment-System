@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import logoImage from "../../assets/images/GlobalSmallLogo.png"
 import { Link, useNavigate } from 'react-router-dom'
-import { loginClient } from '../utils/apiFunctions'
 import jwtDecode from 'jwt-decode'
+import { loginAdmin } from '../utils/apiFunctions'
 
-export function LoginClient() {
+const  LoginAdmin = () => {
 
     const [user,setUser] = useState({
         username : "",
@@ -22,14 +22,14 @@ export function LoginClient() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const response = await loginClient(user)
+        const response = await loginAdmin(user)
 		if (response) {
 			const token = response.token
       const decodedUser = jwtDecode(token)
 			localStorage.setItem("username", decodedUser.sub)
       localStorage.setItem("jwtToken", token)
 
-            navigate("/client/requirement")
+            navigate("/admin/client")
             window.location.reload()
         } else {
 			setErrorMessage("Invalid username or password. Please try again.")
@@ -51,22 +51,7 @@ export function LoginClient() {
           <h2 className="text-center text-2xl font-LakesNeueDemiBold leading-tight text-[#00634D]">
             Sign in to your account
           </h2>
-          <p className="mt-2 text-center text-sm font-TypewcondRegular text-gray-600 ">
-            Don&apos;t have an account?{' '}
-            <Link
-              to="/register/client"
-              className="font-TypewcondRegular font-semibold text-[#00634D] transition-all duration-200 hover:underline"
-            >
-              Create an account
-            </Link>
-            <br/>
-            <Link
-              to="/login/admin"
-              className="font-TypewcondRegular font-semibold text-[#00634D] transition-all duration-200 hover:underline"
-            >
-              Admin login
-            </Link>
-          </p>
+          
           <form onSubmit={handleSubmit} className="mt-8">
             <div className="space-y-5">
               <div>
@@ -94,7 +79,7 @@ export function LoginClient() {
                     Password{' '}
                   </label>
                   <Link className="text-sm font-TypewcondRegular text-[#00634D] hover:underline"
-                    to="/forgot-password">{' '}
+                    to="/reset-password" >{' '}
                     Forgot password?{' '}
                   </Link>
                 </div>
@@ -132,3 +117,5 @@ export function LoginClient() {
     </section>
   )
 }
+
+export default LoginAdmin;
