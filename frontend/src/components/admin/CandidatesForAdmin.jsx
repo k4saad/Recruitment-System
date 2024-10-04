@@ -1,41 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Paginator from "../common/Paginator";
-import { deleteClientById, getAllClientsForAdmin } from "../utils/apiFunctions";
-import ClientCard from "../admin/ClientCard"
+import { deleteCandidateById, getAllCandidatesForAdmin } from "../utils/apiFunctions";
+import CandidateCard from "../admin/CandidateCard"
 
 
 
-const ClientsForAdmin = () => {
+const CandidatesForAdmin = () => {
 
-    const [allClients, setAllClients] = useState([]);
+    const [allCandidates, setAllCandidates] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const [currentpage, setCurrentPage] = useState(1);
-    const [clientsPerPage] = useState(6);
+    const [candidatesPerPage] = useState(6);
     const navigate = useNavigate();
 
-    const calculateTotalPages = (clientsPerPage, allClients) =>
-      Math.ceil(allClients.length / clientsPerPage);
+    const calculateTotalPages = (candidatesPerPage, allCandidates) =>
+      Math.ceil(allCandidates.length / candidatesPerPage);
   
-    const indexOfLastClients = currentpage * clientsPerPage;
-    const indexOfFirstClients = indexOfLastClients - clientsPerPage;
-    const currentClients = allClients.slice(indexOfFirstClients, indexOfLastClients);
+    const indexOfLastCandidates = currentpage * candidatesPerPage;
+    const indexOfFirstCandidates = indexOfLastCandidates - candidatesPerPage;
+    const currentCandidates = allCandidates.slice(indexOfFirstCandidates, indexOfLastCandidates);
   
     const handlePaginationClick = (pageNumber) => {
       setCurrentPage(pageNumber)
     }
 
-    const deleteClient = (clientId) => {
-      deleteClientById(clientId);
-      fetchAllClients();
+    const deleteCandidate = (CandidateId) => {
+      deleteCandidateById(CandidateId);
+      fetchAllCandidates();
     }
   
-    const fetchAllClients = async () => {
+    const fetchAllCandidates = async () => {
       setIsLoading(true);
       try {
-        const data = await getAllClientsForAdmin();
-        setAllClients(data);
+        const data = await getAllCandidatesForAdmin();
+        setAllCandidates(data);
         setIsLoading(false);
       } catch (error) {
         console.error(error)
@@ -48,7 +48,7 @@ const ClientsForAdmin = () => {
               navigate("/login/admin"); 
               window.location.reload();
           }
-          fetchAllClients();
+          fetchAllCandidates();
     }, [navigate]);
 
     return (
@@ -59,7 +59,7 @@ const ClientsForAdmin = () => {
                 <div className="mx-0 flex flex-col">
                   <div>
                     <h1 className="text-center font-CinzelRegular my-8 text-3xl font-bold tracking-tight text-[#00634D] md:text-4xl lg:text-6xl">
-                        Clients
+                        Candidates
                     </h1>
                   </div>
                   {isLoading ? (
@@ -68,10 +68,10 @@ const ClientsForAdmin = () => {
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 lg:flex-row justify-around">
-                      {currentClients.map((client) => (
-                        <ClientCard client={client} 
-                        deleteClient={() => deleteClient(client.clientId)}
-                        key={client.clientId} />
+                      {currentCandidates.map((candidate) => (
+                        <CandidateCard candidate={candidate} 
+                        deleteCandidate={() => deleteCandidate(candidate.candidateId)}
+                        key={candidate.candidateId} />
                       ))}
                     </div>
                   )}
@@ -80,7 +80,7 @@ const ClientsForAdmin = () => {
             </div>
             <Paginator
               currentPage={currentpage}
-              totalPages={calculateTotalPages(clientsPerPage, allClients)}
+              totalPages={calculateTotalPages(candidatesPerPage, allCandidates)}
               onPageChange={handlePaginationClick}
             />
           </section>                
@@ -88,4 +88,4 @@ const ClientsForAdmin = () => {
     )
 }
 
-export default ClientsForAdmin;
+export default CandidatesForAdmin;

@@ -35,6 +35,8 @@ import ClientsForAdmin from './components/admin/ClientsForAdmin.jsx'
 import ClientDetails from './components/admin/ClientDetails.jsx'
 import ForgotPassword from './components/authentication/ForgotPassword.jsx'
 import ResetPassword from './components/authentication/ResetPassword.jsx'
+import CandidatesForAdmin from './components/admin/CandidatesForAdmin.jsx'
+import CandidateDetails from './components/admin/CandidateDetails.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -69,6 +71,8 @@ const router = createBrowserRouter(
       <Route path='login/admin' element = {<LoginAdmin/>}/>
       <Route path='admin/client' element = {<ClientsForAdmin/>}/>
       <Route path='admin/client/detail/:clientId' element = {<ClientDetails/>}/>
+      <Route path='admin/candidate' element = {<CandidatesForAdmin/>}/>
+      <Route path='admin/candidate/detail/:candidateId' element = {<CandidateDetails/>}/>
       <Route path='/forgot-password' element = {<ForgotPassword/>}/>
       <Route path='/reset-password' element = {<ResetPassword/>}/>
     

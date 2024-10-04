@@ -44,6 +44,21 @@ public class ClientController {
         return ResponseEntity.ok(clientResponses);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("{clientId}")
+    public ResponseEntity<Boolean> deleteClientById(
+            @PathVariable Integer clientId
+    ){
+        try{
+            log.info("Received request to delete client with id : {}", clientId);
+            clientService.deleteClientById(clientId);
+            log.info("Client deleted successfully");
+            return ResponseEntity.ok(true);
+        }catch(Error error){
+            return ResponseEntity.ok(false);
+        }
+    }
+
     private ClientResponse getClientResponse(Client client) {
         return new ClientResponse(
                 client.getClientId(),client.getName(),

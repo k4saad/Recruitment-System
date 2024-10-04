@@ -90,4 +90,12 @@ public class CandidateService {
         }
         return clientRequirements;
     }
+
+    public List<Candidate> findAllCandidates() {
+        return candidateRepository.findAll();
+    }
+
+    public void deleteCandidateById(Integer candidateId) {
+        candidateRepository.deleteById(candidateId);
+    }
 }

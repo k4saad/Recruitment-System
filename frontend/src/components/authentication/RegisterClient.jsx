@@ -58,7 +58,7 @@ export function RegisterClient() {
           <p className="mt-2 text-center text-sm font-TypewcondRegular text-gray-600 ">
             Already have an account?{' '}
             <Link
-              to="/login/candidate"
+              to="/login/client"
               className="font-TypewcondRegular font-semibold text-[#00634D] transition-all duration-200 hover:underline"
             >
               Sign In

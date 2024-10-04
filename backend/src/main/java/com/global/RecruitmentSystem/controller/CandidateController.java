@@ -3,17 +3,22 @@ package com.global.RecruitmentSystem.controller;
 import com.global.RecruitmentSystem.exceptions.MedicalReportRetrievalException;
 import com.global.RecruitmentSystem.exceptions.ResumeRetrievalException;
 import com.global.RecruitmentSystem.model.Candidate;
+import com.global.RecruitmentSystem.model.Client;
 import com.global.RecruitmentSystem.response.CandidateDetailsResponse;
+import com.global.RecruitmentSystem.response.ClientResponse;
 import com.global.RecruitmentSystem.service.CandidateService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Slf4j
@@ -56,6 +61,33 @@ public class CandidateController {
         CandidateDetailsResponse candidateDetailsResponse = getCandidateDetailsResponse(candidate);
         log.info("Successfully Converted Candidate to CandidateDetailResponse");
         return ResponseEntity.ok(candidateDetailsResponse);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/all")
+    public ResponseEntity<List<CandidateDetailsResponse>> getAllCandidate(){
+        List<CandidateDetailsResponse> candidateDetailsResponses = new ArrayList<>();
+        List<Candidate> candidates = candidateService.findAllCandidates();
+        for(Candidate candidate : candidates){
+            CandidateDetailsResponse candidateDetailsResponse = getCandidateDetailsResponse(candidate);
+            candidateDetailsResponses.add(candidateDetailsResponse);
+        }
+        return ResponseEntity.ok(candidateDetailsResponses);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("{candidateId}")
+    public ResponseEntity<Boolean> deleteCandidateById(
+            @PathVariable Integer candidateId
+    ){
+        try{
+            log.info("Received request to delete candidate with id : {}", candidateId);
+            candidateService.deleteCandidateById(candidateId);
+            log.info("Candidate deleted successfully");
+            return ResponseEntity.ok(true);
+        }catch(Error error){
+            return ResponseEntity.ok(false);
+        }
     }
 
     private CandidateDetailsResponse getCandidateDetailsResponse(Candidate candidate) {

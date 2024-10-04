@@ -114,7 +114,6 @@ export const addRequirement = async (username, newRequirement) => {
     }
 };
 
-// Function to delete room by id
 export async function deleteRequirementById(requirementId){
     try {
         const token = getToken();
@@ -589,7 +588,7 @@ export async function getAllClientsForAdmin(){
         })
         return response.data
     } catch (error) {
-        throw new Error("Error : Fetching applications")
+        throw new Error("Error : Fetching client")
     }
 }
 
@@ -611,3 +610,44 @@ export async function updatePassword(token, newPassword){
     }
 }
 
+export async function deleteClientById(clientId){
+    try {
+        const token = getToken();
+        const response = await api.delete(`/client/${clientId}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Deleting client")
+    }
+}
+
+export async function getAllCandidatesForAdmin(){
+    try {
+        const token = getToken();
+        const response = await api.get(`/candidate/all`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching candidates")
+    }
+}
+
+export async function deleteCandidateById(candidateId){
+    try {
+        const token = getToken();
+        const response = await api.delete(`/candidate/${candidateId}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Deleting candidate")
+    }
+}

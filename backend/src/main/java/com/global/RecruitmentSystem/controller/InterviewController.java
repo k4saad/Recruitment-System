@@ -98,7 +98,7 @@ public class InterviewController {
         for(CandidateApplication candidateApplication : candidateApplications){
             InterviewCandidateCardResponse interviewCandidateCardResponse =
                     convertToInterviewCandidateCardResponse(candidateApplication);
-            if(interviewCandidateCardResponse != null )
+            if(interviewCandidateCardResponse != null && interviewCandidateCardResponse.getInterviewTimestamp().isAfter(LocalDateTime.now()))
                 interviewCandidateCardResponses.add(interviewCandidateCardResponse);
         }
         return ResponseEntity.ok(interviewCandidateCardResponses);

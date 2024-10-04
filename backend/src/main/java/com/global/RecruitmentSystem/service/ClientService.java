@@ -58,4 +58,8 @@ public class ClientService {
     public void save(Client client) {
         clientRepository.save(client);
     }
+
+    public void deleteClientById(Integer clientId) {
+        clientRepository.deleteById(clientId);
+    }
 }
