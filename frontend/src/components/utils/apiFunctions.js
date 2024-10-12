@@ -651,3 +651,31 @@ export async function deleteCandidateById(candidateId){
         throw new Error("Error : Deleting candidate")
     }
 }
+
+export async function getAllRequirements(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/requirements/all`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching requirements")
+    }
+}
+
+export async function getAdminDetails(username){
+    try {
+        const token = getToken();
+        const response = await api.get(`/auth/admin`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        throw new Error("Error : Fetching details")
+    }
+}

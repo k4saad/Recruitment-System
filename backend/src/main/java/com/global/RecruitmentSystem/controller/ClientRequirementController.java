@@ -107,6 +107,21 @@ public class ClientRequirementController {
         return ResponseEntity.ok(availableClientRequirementCardResponses);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("all")
+    public ResponseEntity<List<ClientRequirementCardResponse>> getAllClientRequirements(){
+        List<ClientRequirementCardResponse> allClientRequirementCardResponses = new ArrayList<>();
+        log.info("Received request for all client requirements");
+
+        List<ClientRequirement> allClientRequirements = clientRequirementService.getAllClientRequirements();
+
+        for (ClientRequirement clientRequirement : allClientRequirements) {
+            ClientRequirementCardResponse clientRequirementCardResponse =
+                    getClientRequirementsCardResponse(clientRequirement);
+            allClientRequirementCardResponses.add(clientRequirementCardResponse);
+        }
+        return ResponseEntity.ok(allClientRequirementCardResponses);
+    }
 
     @GetMapping("detail/{requirementId}")
     public ResponseEntity<ClientRequirementDetailResponse> getClientRequirementDetail(

@@ -1,8 +1,10 @@
 package com.global.RecruitmentSystem.controller;
 
 import com.global.RecruitmentSystem.exceptions.UserAlreadyExistsException;
+import com.global.RecruitmentSystem.model.Admin;
 import com.global.RecruitmentSystem.model.Candidate;
 import com.global.RecruitmentSystem.model.Client;
+import com.global.RecruitmentSystem.response.AdminResponse;
 import com.global.RecruitmentSystem.response.JwtResponse;
 import com.global.RecruitmentSystem.security.User;
 import com.global.RecruitmentSystem.security.service.JWTService;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -130,6 +133,21 @@ public class AuthController {
         return ResponseEntity.badRequest().body("Invalid token.");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/admin")
+    public ResponseEntity<AdminResponse> getAdminDetails(){
+        log.info("Received request for admin details");
+        Admin admin = adminService.findByUsername("Admin");
+        AdminResponse adminResponse = getAdminResponse(admin);
+        return ResponseEntity.ok(adminResponse);
+    }
+
+    private AdminResponse getAdminResponse(Admin admin) {
+        return new AdminResponse(
+                admin.getId(),admin.getName(),
+                admin.getUsername(),admin.getEmail()
+        );
+    }
 
     private void sendEmail(String toEmail, String resetLink) {
         try {

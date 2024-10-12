@@ -102,7 +102,7 @@ const AdminSideBar = () => {
               Profile
             </label>
             <NavLink
-            to="/client/profile"
+            to="/admin/profile"
             className={({isActive}) => `flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 ${
                 isActive ? "text-[#032B22] bg-[#EFEDE7]" : ""} hover:bg-[#EFEDE7] hover:text-[#032B22]`}
               >

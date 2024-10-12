@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ErrorNotification from "../../common/ErrorNotification";
+import ErrorNotification from "../common/ErrorNotification";
 import { Link, useNavigate } from "react-router-dom";
-import { getClientDetails } from "../../utils/apiFunctions";
+import { getAdminDetails } from "../utils/apiFunctions";
 
-const ClientProfile = () => {
-    const [client, setClient] = useState();
+const AdminProfile = () => {
+    const [admin, setAdmin] = useState();
     const [errorMessage, setErrorMessage] = useState("")
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
@@ -12,17 +12,17 @@ const ClientProfile = () => {
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
         if (!token) {
-            navigate("/login/client"); 
+            navigate("/login/admin"); 
             window.location.reload();
         }
-        fetchClientDetails();
+        fetchAdminDetails();
     }, [navigate]);
     
-    const fetchClientDetails = async () => {
+    const fetchAdminDetails = async () => {
         setIsLoading(true);
         try {
-          const data = await getClientDetails(localStorage.getItem("username"));
-          setClient(data);
+          const data = await getAdminDetails();
+          setAdmin(data);
           setIsLoading(false);
         } catch (error) {
           setErrorMessage(error.message);
@@ -61,14 +61,12 @@ const ClientProfile = () => {
               </div>
             ) : (
               <>
-              {client ? (
+              {admin ? (
                 <div className="m-5 font-LakesNeueRegular overflow-hidden rounded-lg border border-gray-200 shadow-md pb-1">
                   <div className="p-5">
-                      <h3 className="text-xl font-semibold">Name : {client.name}</h3>
-                      <p className="my-5"><strong>Organization Name:</strong> {client.organizationName}</p>
-                      <p className="my-5"><strong>Contact Number:</strong> {client.contactNumber}</p>
-                      <p className="my-5"><strong>Username:</strong> {client.username}</p>                  
-                      <p className="my-5"><strong>Email Id :</strong> {client.email}</p>                  
+                      <h3 className="text-xl font-semibold">Name : {admin.name}</h3>
+                      <p className="my-5"><strong>Username:</strong> {admin.username}</p>                  
+                      <p className="my-5"><strong>Email Id :</strong> {admin.email}</p>                  
                 </div>
                   <div  className="flex justify-center my-4">
                         <div>
@@ -83,7 +81,7 @@ const ClientProfile = () => {
                 </div>
               ) : (
                 <div className="m-5 font-LakesNeueRegular overflow-hidden rounded-lg border border-gray-200 shadow-md pb-1">
-                  Client not found
+                  Admin not found
                 </div>
               )}
             </>
@@ -93,4 +91,4 @@ const ClientProfile = () => {
     )
 }
 
-export default ClientProfile;
+export default AdminProfile;

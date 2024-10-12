@@ -78,10 +78,6 @@ const  LoginAdmin = () => {
                     {' '}
                     Password{' '}
                   </label>
-                  <Link className="text-sm font-TypewcondRegular text-[#00634D] hover:underline"
-                    to="/reset-password" >{' '}
-                    Forgot password?{' '}
-                  </Link>
                 </div>
                 <div className="mt-2">
                   <input
