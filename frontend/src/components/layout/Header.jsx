@@ -8,7 +8,7 @@ const Header = () => {
       <nav
         className={` px-4 lg:px-6 ${
           location.pathname === "/"
-            ? "bg-transparent bg-opacity-0 text-[#EFEDE7]"
+            ? "bg-transparent bg-opacity-30 backdrop-blur-md  text-[#EFEDE7]"
             : "bg-[#ffffff] text-black"
         }`}
       >
