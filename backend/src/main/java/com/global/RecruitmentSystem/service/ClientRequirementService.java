@@ -42,7 +42,7 @@ public class ClientRequirementService {
 
     public ClientRequirement getRequirementById(Integer requirementId) {
         return clientRequirementRepository.findById(requirementId).orElseThrow(
-                () -> new ClientRequirementNotFound("Client Requirement with id " + requirementId + "does not exist")
+                () -> new ClientRequirementNotFound(requirementId)
         );
     }
 }

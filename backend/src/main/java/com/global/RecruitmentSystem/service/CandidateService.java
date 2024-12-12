@@ -62,7 +62,7 @@ public class CandidateService {
             try{
                 candidate.setResume(new SerialBlob(resumeBytes));
             }catch (SQLException exception){
-                throw new InternalServerException("Error : Updating profile");
+                throw new InternalServerException("profile");
             }
         }
         if(medicalReportBytes != null && medicalReportBytes.length > 0){

@@ -32,6 +32,11 @@ public class CandidateApplicationController {
 
     private final CandidateApplicationService candidateApplicationService;
 
+
+    /**
+     * We no longer need to catch DocumentMissing Here.
+     * Since the global exception handler will take care of it.
+     */
     @PreAuthorize("hasRole('ROLE_CANDIDATE')")
     @PostMapping("/{username}")
     public ResponseEntity<?> addCandidateApplication(
@@ -39,12 +44,8 @@ public class CandidateApplicationController {
             @RequestParam Integer requirementId
     ) {
         log.info("Received request to add CandidateApplication for candidate : {}", username);
-        try {
             CandidateApplication candidateApplication = candidateApplicationService.addCandidateApplication(username, requirementId);
             return ResponseEntity.ok(true);
-        } catch (DocumentMissing e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 
 
@@ -226,14 +227,14 @@ public class CandidateApplicationController {
             try{
                 resumeBytes = resumeBlob.getBytes(1, (int) resumeBlob.length());
             } catch (SQLException e) {
-                throw new ResumeRetrievalException("Error retrieving Candidate resume");
+                throw new ResumeRetrievalException();
             }
         }
         if(medicalReportBlob != null){
             try{
                 medicalReportBytes = medicalReportBlob.getBytes(1, (int) medicalReportBlob.length());
             } catch (SQLException e) {
-                throw new MedicalReportRetrievalException("Error retrieving Candidate medical report");
+                throw new MedicalReportRetrievalException();
             }
         }
 
@@ -293,7 +294,7 @@ public class CandidateApplicationController {
             try{
                 ticketBytes = ticketBlob.getBytes(1, (int) ticketBlob.length());
             } catch (SQLException e) {
-                throw new TicketRetrievalException("Error retrieving Candidate Visa document");
+                throw new TicketRetrievalException();
             }
         }
         return new CandidateTicketResponse(
@@ -310,7 +311,7 @@ public class CandidateApplicationController {
             try{
                 visaDocumentBytes = visaDocumentBlob.getBytes(1, (int) visaDocumentBlob.length());
             } catch (SQLException e) {
-                throw new VisaDocumentRetrievalException("Error retrieving Candidate Visa document");
+                throw new VisaDocumentRetrievalException();
             }
         }
         return new CandidateVisaDocumentResponse(
