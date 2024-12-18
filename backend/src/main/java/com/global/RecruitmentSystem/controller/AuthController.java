@@ -45,9 +45,9 @@ public class AuthController {
     ){
         try{
             if(candidateService.findByUsername(candidate.getUsername()) != null)
-                throw new UserAlreadyExistsException("User Already Exists");
+                throw new UserAlreadyExistsException(candidate.getUsername());
             if(clientService.findByUsername(candidate.getUsername()) != null)
-                throw new UserAlreadyExistsException("User Already Exists");
+                throw new UserAlreadyExistsException(candidate.getUsername());
             candidateService.register(candidate);
             log.info("Candidate Registered");
             return ResponseEntity.ok("Registration Successful");
@@ -63,9 +63,9 @@ public class AuthController {
     ){
         try{
             if(candidateService.findByUsername(client.getUsername()) != null)
-                throw new UserAlreadyExistsException("User Already Exists");
+                throw new UserAlreadyExistsException(client.getUsername());
             if(clientService.findByUsername(client.getUsername()) != null)
-                throw new UserAlreadyExistsException("User Already Exists");
+                throw new UserAlreadyExistsException(client.getUsername());
             clientService.register(client);
             log.info("Client Registered");
             return ResponseEntity.ok("Registration Successful");
