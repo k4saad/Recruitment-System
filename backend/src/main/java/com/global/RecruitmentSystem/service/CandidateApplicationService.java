@@ -36,7 +36,7 @@ public class CandidateApplicationService {
         Candidate candidate = candidateService.findByUsername(username);
         log.info("Checking to see if candidate has resume");
         if(candidate.getResume() == null){
-            throw new DocumentMissing("Please upload resume");
+            throw new DocumentMissing();
         }
         log.info("Creating object of CandidateApplication");
         CandidateApplication candidateApplication = CandidateApplication.builder()
@@ -58,7 +58,7 @@ public class CandidateApplicationService {
 
     public CandidateApplication getCandidateApplicationById(Integer applicationId) {
         return candidateApplicationRepository.findById(applicationId).orElseThrow(
-                () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+                () -> new CandidateApplicationNotFound(applicationId)
         );
     }
 
@@ -66,7 +66,7 @@ public class CandidateApplicationService {
     public void updateStatusToUnderReview(Integer applicationId) {
         CandidateApplication candidateApplication = candidateApplicationRepository.findById(applicationId)
                 .orElseThrow(
-                        () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+                        () -> new CandidateApplicationNotFound(applicationId)
                 );
         candidateApplication.setStatus(CandidateApplicationStatus.UNDER_REVIEW);
         candidateApplicationRepository.save(candidateApplication);
@@ -78,7 +78,7 @@ public class CandidateApplicationService {
 
     public void rejectApplicant(Integer applicationId) {
         CandidateApplication candidateApplication = candidateApplicationRepository.findById(applicationId).orElseThrow(
-                () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+                () -> new CandidateApplicationNotFound(applicationId)
         );
         if(candidateApplication.getInterview() != null){
             candidateApplication.setInterview(null);
@@ -90,7 +90,7 @@ public class CandidateApplicationService {
 
     public void markAsFit(Integer applicationId) {
         CandidateApplication candidateApplication = candidateApplicationRepository.findById(applicationId).orElseThrow(
-                () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+                () -> new CandidateApplicationNotFound(applicationId)
         );
         candidateApplication.getCandidate().setMedicalStatus(MedicalStatus.FIT);
         candidateApplicationRepository.save(candidateApplication);
@@ -98,7 +98,7 @@ public class CandidateApplicationService {
 
     public void markAsUnfit(Integer applicationId) {
         CandidateApplication candidateApplication = candidateApplicationRepository.findById(applicationId).orElseThrow(
-                () -> new CandidateApplicationNotFound("Candidate application with id " + applicationId + "does not exist")
+                () -> new CandidateApplicationNotFound(applicationId)
         );
         candidateApplication.getCandidate().setMedicalStatus(MedicalStatus.UNFIT);
         candidateApplicationRepository.save(candidateApplication);
@@ -115,7 +115,7 @@ public class CandidateApplicationService {
             try{
                 ticket.setTicket(new SerialBlob(ticketBytes));
             }catch (SQLException exception){
-                throw new InternalServerException("Error : Uploading ticket");
+                throw new InternalServerException("ticket");
             }
         }
         candidateApplication.addTicket(ticket);
@@ -131,7 +131,7 @@ public class CandidateApplicationService {
             try{
                 visa.setVisaDocument(new SerialBlob(visaBytes));
             }catch (SQLException exception){
-                throw new InternalServerException("Error : Uploading visa");
+                throw new InternalServerException("visa");
             }
         }
         candidateApplication.addVisa(visa);

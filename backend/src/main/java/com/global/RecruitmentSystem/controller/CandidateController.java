@@ -99,14 +99,14 @@ public class CandidateController {
             try{
                 resumeBytes = resumeBlob.getBytes(1, (int) resumeBlob.length());
             } catch (SQLException e) {
-                throw new ResumeRetrievalException("Error : Retrieving resume");
+                throw new ResumeRetrievalException();
             }
         }
         if(medicalReportBlob != null){
             try{
                 medicalReportBytes = medicalReportBlob.getBytes(1, (int) medicalReportBlob.length());
             } catch (SQLException e) {
-                throw new MedicalReportRetrievalException("Error : Retrieving medical report");
+                throw new MedicalReportRetrievalException();
             }
         }
 
