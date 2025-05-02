@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://recruitment-system-frontend.onrender.com")
 @RequestMapping("/auth")
 @Slf4j
 public class AuthController {

@@ -27,7 +27,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/applications")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://recruitment-system-frontend.onrender.com")
 public class CandidateApplicationController {
 
     private final CandidateApplicationService candidateApplicationService;

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/requirements")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://recruitment-system-frontend.onrender.com")
 public class ClientRequirementController {
     private final ClientRequirementService clientRequirementService;
     private final CandidateService candidateService;

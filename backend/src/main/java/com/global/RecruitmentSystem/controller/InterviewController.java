@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/interview")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://recruitment-system-frontend.onrender.com")
 public class InterviewController {
 
     private final InterviewService interviewService;

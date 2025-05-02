@@ -22,7 +22,7 @@ import java.sql.Blob;
 @Slf4j
 @RestController
 @RequestMapping("/payment")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://recruitment-system-frontend.onrender.com")
 public class PaymentController {
     private final com.global.RecruitmentSystem.service.paymentService paymentService;
     private final CandidateApplicationService candidateApplicationService;
