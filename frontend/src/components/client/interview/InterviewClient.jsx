@@ -39,8 +39,8 @@ export default function InterviewClient() {
 
   // Function to handle meeting setup
   const myMeeting = async () => {
-    const appID = 1990302116;
-    const serverSecret = '6d753fb6b4bd67e6563728a69191cb59';
+    const appID = 287878519;
+    const serverSecret = '6d9735ab65ed96f06bd06d65eda14cb4';
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,
       serverSecret,
